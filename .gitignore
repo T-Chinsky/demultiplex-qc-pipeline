@@ -5,6 +5,7 @@ results/
 test_results/
 .DS_Store
 *.log
+nxf-tmp.*
 
 # nf-test
 .nf-test/
