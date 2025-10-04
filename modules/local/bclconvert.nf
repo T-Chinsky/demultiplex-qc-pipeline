@@ -1,7 +1,7 @@
 process BCLCONVERT {
     tag "${meta.id}"
     label 'process_high'
-    container 'nfcore/bclconvert:4.4.6'
+    container 'docker://ubgbc/bcl-convert:4.4.6'
     publishDir "${params.outdir}/${meta.id}/bclconvert", mode: params.publish_dir_mode
 
     input:
