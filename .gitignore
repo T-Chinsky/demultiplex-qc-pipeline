@@ -7,6 +7,10 @@ test_results/
 *.log
 nxf-tmp.*
 
+# Development/debug docs
+BCL_CONVERT_FIX.md
+LINT_REPORT.md
+
 # nf-test
 .nf-test/
 .nf-test.log
