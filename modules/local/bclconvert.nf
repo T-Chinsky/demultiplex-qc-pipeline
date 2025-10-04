@@ -24,8 +24,8 @@ process BCLCONVERT {
     }
     def extra_args = args.join(' ')
     """
-    # Create writable log directory in work dir
-    mkdir -p bcl_logs
+    # Create writable log directories (one for our logs, one for bcl-convert internal logs)
+    mkdir -p bcl_logs bcl_convert_logs
     export BCL_LOG_DIR=\$PWD/bcl_logs
     
     bcl-convert \\

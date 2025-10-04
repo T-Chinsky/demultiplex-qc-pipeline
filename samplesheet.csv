@@ -1,0 +1,8 @@
+[Header]
+FileFormatVersion,2
+[BCLConvert_Settings]
+SoftwareVersion,4.4.6
+[BCLConvert_Data]
+Sample_ID,index
+Sample1,AAAAAAAA
+Sample2,TTTTTTTT
