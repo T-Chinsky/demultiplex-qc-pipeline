@@ -24,21 +24,14 @@ process BCLCONVERT {
     }
     def extra_args = args.join(' ')
     """
-    # Create writable log directories
-    # BCL Convert requires /var/log/bcl-convert to be writable
-    # The Singularity bind mount will map this to our work directory
-    mkdir -p var/log/bcl-convert bcl_logs output
-    
-    # Set environment to use our local log directory
-    export BCL_LOG_DIR=\$PWD/var/log/bcl-convert
+    # Create output directory
+    mkdir -p output
     
     bcl-convert \\
         --sample-sheet ${samplesheet} \\
         --bcl-input-directory ${run_dir} \\
         --output-directory output \\
         --force \\
-        --log-level INFO \\
-        --log-file bcl_logs/bcl-convert.log \\
         ${extra_args}
 
     # Generate versions file
