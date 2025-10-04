@@ -21,6 +21,14 @@ process BCL2FASTQ {
     def writing_threads = Math.max(1, (task.cpus * 0.5) as int)
     
     """
+    # Create writable log directory in work dir to avoid read-only filesystem issues
+    mkdir -p bcl2fastq_logs
+    export BCL2FASTQ_LOG_DIR=\$PWD/bcl2fastq_logs
+    
+    # Redirect any system logs to work directory
+    export TMPDIR=\$PWD/tmp
+    mkdir -p \$TMPDIR
+    
     bcl2fastq \\
         --runfolder-dir ${run_dir} \\
         --output-dir output \\
@@ -28,7 +36,8 @@ process BCL2FASTQ {
         --loading-threads ${loading_threads} \\
         --processing-threads ${processing_threads} \\
         --writing-threads ${writing_threads} \\
-        ${args}
+        ${args} \\
+        2>&1 | tee bcl2fastq_logs/bcl2fastq.log
     
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
