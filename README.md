@@ -409,9 +409,9 @@ For more details about interpreting the output files and quality metrics, refer 
 - `--fastq_screen_config`: Path to fastq_screen config (enables contamination screening)
 
 #### BCL Convert Specific Parameters
-- `--bcl_sampleproject_subdirectories`: Create subdirectories organized by sample/project in BCL Convert output (default: `false`)
-- When enabled: organizes output as `output/Sample_Project/Sample_ID/`
-- When disabled: all files in flat `output/` directory
+- `--bcl_sampleproject_subdirectories`: Create subdirectories organized by project in BCL Convert output (default: `false`)
+  - When enabled: organizes output as `output/Sample_Project/`
+  - When disabled: all files in flat `output/` directory
 - `--no_lane_splitting`: Combine lanes in BCL Convert output files (default: `false`)
 - When enabled: generates `Sample_S1_R1_001.fastq.gz` (lanes combined)
 - When disabled: generates `Sample_S1_L001_R1_001.fastq.gz`, `Sample_S1_L002_R1_001.fastq.gz`, etc.
