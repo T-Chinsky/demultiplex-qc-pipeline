@@ -248,17 +248,11 @@ workflow {
         ========================================
         """.stripIndent()
         
-        // Auto-cleanup work directory on successful completion
+        // Note: Auto-cleanup disabled - manually remove work directory if needed
+        // Use: rm -rf ${workflow.workDir}
         if (workflow.success && !params.debug) {
-            log.info "Cleaning up work directory: ${workflow.workDir}"
-            def cleanup_cmd = "rm -rf ${workflow.workDir}"
-            def cleanup_proc = cleanup_cmd.execute()
-            cleanup_proc.waitFor()
-            if (cleanup_proc.exitValue() == 0) {
-                log.info "Work directory cleaned successfully"
-            } else {
-                log.warn "Failed to clean work directory. You may need to manually remove: ${workflow.workDir}"
-            }
+            log.info "Pipeline completed successfully. Work directory preserved at: ${workflow.workDir}"
+            log.info "To clean up, run: rm -rf ${workflow.workDir}"
         }
     }
 

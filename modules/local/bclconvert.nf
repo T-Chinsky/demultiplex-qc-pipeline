@@ -24,11 +24,17 @@ process BCLCONVERT {
     }
     def extra_args = args.join(' ')
     """
+    # Create writable log directory in work dir
+    mkdir -p bcl_logs
+    export BCL_LOG_DIR=\$PWD/bcl_logs
+    
     bcl-convert \\
         --sample-sheet ${samplesheet} \\
         --bcl-input-directory ${run_dir} \\
         --output-directory output \\
         --force \\
+        --log-level INFO \\
+        --log-file bcl_logs/bcl-convert.log \\
         ${extra_args}
 
     # Generate versions file
