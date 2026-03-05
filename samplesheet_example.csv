@@ -1,0 +1,5 @@
+Lane,Sample_ID,index,index2,Sample_Project
+1,Sample1,ATCGATCG,GCTAGCTA,Project1
+1,Sample2,GCTAGCTA,ATCGATCG,Project1
+2,Sample3,TTAATTAA,CCGGCCGG,Project2
+2,Sample4,CCGGCCGG,TTAATTAA,Project2
