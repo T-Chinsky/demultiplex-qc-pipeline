@@ -1,9 +1,11 @@
 process BCLCONVERT {
-    tag "${samplesheet.baseName}"
+    tag "${run_id}"
     label 'process_high'
     container 'community.wave.seqera.io/library/bclconvert:4.2.7--abc21b231d8db3e0'
+    publishDir "${params.outdir}/${run_id}/bclconvert", mode: 'copy'
 
     input:
+    val run_id
     path samplesheet
     path run_dir
 

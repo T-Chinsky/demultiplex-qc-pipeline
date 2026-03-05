@@ -1,13 +1,16 @@
 process MULTIQC {
+    tag "${run_id}"
     label 'process_low'
     container 'community.wave.seqera.io/library/multiqc:1.25.2--d33ec18a85c9e91f'
-    publishDir "${params.outdir}/multiqc", mode: 'copy'
+    publishDir "${params.outdir}/${run_id}/multiqc", mode: 'copy'
 
     input:
+    val run_id
     path multiqc_files
+    val multiqc_title
 
     output:
-    path 'multiqc_report.html', emit: report
+    path "${run_id}_multiqc_report.html", emit: report
     path 'multiqc_data', emit: data
     path 'versions.yml', emit: versions
 
@@ -15,7 +18,8 @@ process MULTIQC {
     """
     multiqc \\
         --force \\
-        --filename multiqc_report.html \\
+        --title "${multiqc_title}" \\
+        --filename ${run_id}_multiqc_report.html \\
         .
 
     cat <<-END_VERSIONS > versions.yml
@@ -27,7 +31,7 @@ process MULTIQC {
     stub:
     """
     mkdir -p multiqc_data
-    touch multiqc_report.html
+    touch ${run_id}_multiqc_report.html
     touch multiqc_data/multiqc_data.json
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

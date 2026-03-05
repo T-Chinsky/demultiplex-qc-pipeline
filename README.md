@@ -1,14 +1,16 @@
 # BCL Convert + QC Pipeline
 
-A Nextflow DSL2 pipeline for demultiplexing Illumina BCL files and performing comprehensive quality control.
+A Nextflow DSL2 pipeline for batch processing multiple Illumina BCL conversion runs with comprehensive quality control.
 
 ## Features
 
+- ✅ **Batch Processing**: Process multiple BCL runs simultaneously from a single CSV input
 - ✅ **BCL Convert**: Demultiplex Illumina BCL files to FASTQ format
-- ✅ **Flexible Input**: Use your existing BCL Convert samplesheets (any format accepted by bcl-convert)
+- ✅ **Direct Samplesheet Support**: Use your existing BCL Convert samplesheets (any format accepted by bcl-convert)
+- ✅ **Custom MultiQC Titles**: Set descriptive report titles for each run
 - ✅ **FastQC**: Quality control assessment of sequencing reads
 - ✅ **fastq_screen**: Optional contamination screening
-- ✅ **MultiQC**: Aggregated HTML reports combining all QC metrics
+- ✅ **MultiQC**: Separate QC reports for each run with custom titles
 - ✅ **Container-based**: Reproducible execution with Docker/Singularity
 - ✅ **Scalable**: Automatic parallelization and resource management
 - ✅ **Resume**: Continue from failed tasks with `-resume`
@@ -24,19 +26,26 @@ A Nextflow DSL2 pipeline for demultiplexing Illumina BCL files and performing co
 
 ```bash
 nextflow run main.nf \
-  --samplesheet /path/to/SampleSheet.csv \
-  --run_dir /path/to/bcl/run \
+  --input runs.csv \
   --outdir results
 ```
 
-**Note**: `--samplesheet` should point to your BCL Convert samplesheet file (the one that came with your sequencing run or your custom samplesheet). The pipeline passes this directly to `bcl-convert`, so any format accepted by BCL Convert will work.
+See [INPUT_FORMAT.md](INPUT_FORMAT.md) for detailed CSV format documentation.
+
+**Example `runs.csv`:**
+```csv
+run_id,samplesheet,run_dir,multiqc_title
+run1,/data/runs/2024_01_15/SampleSheet.csv,/data/runs/2024_01_15,Cancer Panel - Batch 1
+run2,/data/runs/2024_01_16/SampleSheet.csv,/data/runs/2024_01_16,RNA-Seq Controls
+```
+
+**Note**: Samplesheets are passed directly to `bcl-convert`, so any format accepted by BCL Convert will work (no reformatting required).
 
 ### With Contamination Screening
 
 ```bash
 nextflow run main.nf \
-  --samplesheet /path/to/SampleSheet.csv \
-  --run_dir /path/to/bcl/run \
+  --input runs.csv \
   --outdir results \
   --fastq_screen_config fastq_screen.conf
 ```
@@ -46,27 +55,38 @@ nextflow run main.nf \
 ```bash
 nextflow run main.nf \
   -profile slurm \
-  --samplesheet /path/to/SampleSheet.csv \
-  --run_dir /path/to/bcl/run
+  --input runs.csv
 ```
 
 ## Input Files
 
+### Input CSV Format
+
+The `--input` parameter accepts a CSV file with the following columns:
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `run_id` | Yes | Unique identifier for the run (used in output directory naming) |
+| `samplesheet` | Yes | Full path to the BCL Convert samplesheet |
+| `run_dir` | Yes | Full path to the BCL run directory |
+| `multiqc_title` | No | Custom title for the MultiQC report (defaults to `run_id`) |
+
+See [INPUT_FORMAT.md](INPUT_FORMAT.md) and `example_input.csv` for complete documentation and examples.
+
 ### Samplesheet Format
 
-The `--samplesheet` parameter accepts **any BCL Convert-compatible samplesheet**. This includes:
+The samplesheet files referenced in the input CSV can be **any BCL Convert-compatible format**:
 
 - Standard Illumina `SampleSheet.csv` files from the sequencing run
 - Custom samplesheets with `[BCLConvert_Data]` section
 - Simple CSV files with just the data columns (for older bcl2fastq compatibility)
 
-The pipeline passes your samplesheet directly to `bcl-convert`, so you can use any formatting or settings that `bcl-convert` accepts. See the included `samplesheet_example.csv` for a standard format example.
+The pipeline passes samplesheets directly to `bcl-convert`, so any formatting or settings that `bcl-convert` accepts will work. See `samplesheet_example.csv` for a standard format example.
 
 ## Parameters
 
 ### Required
-- `--samplesheet`: Path to your BCL Convert samplesheet (e.g., `SampleSheet.csv` from the sequencing run)
-- `--run_dir`: Path to Illumina BCL run directory
+- `--input`: Path to input CSV file listing runs to process (see [INPUT_FORMAT.md](INPUT_FORMAT.md))
 
 ### Optional
 - `--outdir`: Output directory (default: `./results`)
@@ -83,12 +103,18 @@ The pipeline passes your samplesheet directly to `bcl-convert`, so you can use a
 
 ```
 results/
-├── bclconvert/          # Demultiplexed FASTQ files + BCL Convert reports
-├── fastqc/              # FastQC quality control reports
-├── fastq_screen/        # Contamination screening results (optional)
-├── multiqc/             
-│   └── multiqc_report.html  ← START HERE for QC review
-└── pipeline_info/       # Execution reports and logs
+├── run1/                    # First run from input CSV
+│   ├── bclconvert/          # Demultiplexed FASTQ files + BCL Convert reports
+│   ├── fastqc/              # FastQC quality control reports
+│   ├── fastq_screen/        # Contamination screening (if enabled)
+│   └── multiqc/             
+│       └── run1_multiqc_report.html  ← QC report with custom title
+├── run2/                    # Second run from input CSV
+│   ├── bclconvert/
+│   ├── fastqc/
+│   └── multiqc/
+│       └── run2_multiqc_report.html
+└── pipeline_info/           # Execution reports and logs
 ```
 
 ## Profiles
