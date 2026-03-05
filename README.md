@@ -43,11 +43,13 @@ run2,/data/runs/2024_01_16/SampleSheet.csv,/data/runs/2024_01_16,RNA-Seq Control
 
 ### With Contamination Screening
 
+First, set up fastq_screen databases following the [FASTQ_SCREEN_SETUP.md](FASTQ_SCREEN_SETUP.md) guide.
+
 ```bash
 nextflow run main.nf \
   --input runs.csv \
   --outdir results \
-  --fastq_screen_config fastq_screen.conf
+  --fastq_screen_config /path/to/fastq_screen.conf
 ```
 
 ### On SLURM Cluster
@@ -57,6 +59,22 @@ nextflow run main.nf \
   -profile slurm \
   --input runs.csv
 ```
+
+## FastQ Screen Setup (Optional)
+
+For contamination screening, you'll need to download and build reference genome databases. See the comprehensive guide:
+
+📖 **[FASTQ_SCREEN_SETUP.md](FASTQ_SCREEN_SETUP.md)** - Complete instructions for downloading and indexing all 12 reference genomes
+
+**Quick summary:**
+- Download genomes (hg38, mm10, rat, univec, phix, adapters, ecoli, yeast, drosophila, mycoplasma, viral, bacterial)
+- Build Bowtie2 indexes for each genome
+- Create `fastq_screen.conf` pointing to your indexes
+- Pass config file to pipeline with `--fastq_screen_config`
+
+**Minimal setup (recommended for testing):** PhiX + Adapters + E.coli + UniVec (~2 GB, 30 minutes)
+
+**Full setup:** All 12 genomes (~25 GB indexed, 5-6 hours build time)
 
 ## Input Files
 
