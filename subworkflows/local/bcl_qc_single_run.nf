@@ -1,13 +1,13 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT LOCAL MODULES
+    IMPORT NF-CORE MODULES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BCLCONVERT   } from '../../modules/local/bclconvert'
-include { FASTQC       } from '../../modules/local/fastqc'
-include { FASTQ_SCREEN } from '../../modules/local/fastq_screen'
-include { MULTIQC      } from '../../modules/local/multiqc'
+include { BCLCONVERT                 } from '../../modules/nf-core/bclconvert/main'
+include { FASTQC                     } from '../../modules/nf-core/fastqc/main'
+include { FASTQSCREEN_FASTQSCREEN    } from '../../modules/nf-core/fastqscreen/fastqscreen/main'
+include { MULTIQC                    } from '../../modules/nf-core/multiqc/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,7 +28,7 @@ workflow BCL_QC_SINGLE_RUN {
     // MODULE: BCL Convert - Demultiplex BCL files to FASTQ
     //
     BCLCONVERT(ch_input)
-    ch_versions = ch_versions.mix(BCLCONVERT.out.versions)
+    ch_versions = ch_versions.mix(BCLCONVERT.out.versions_bclconvert)
 
     //
     // Flatten the fastq channel for per-file QC
@@ -42,7 +42,7 @@ workflow BCL_QC_SINGLE_RUN {
     def ch_fastqc_zip = channel.empty()
     if (!params.skip_fastqc) {
         FASTQC(ch_fastq_flat)
-        ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+        ch_versions = ch_versions.mix(FASTQC.out.versions_fastqc.first())
         ch_fastqc_zip = FASTQC.out.zip.map { _meta, zip -> zip }
     }
 
@@ -51,9 +51,9 @@ workflow BCL_QC_SINGLE_RUN {
     //
     def ch_fastq_screen_txt = channel.empty()
     if (!params.skip_fastq_screen) {
-        FASTQ_SCREEN(ch_fastq_flat, ch_fastq_screen_config)
-        ch_versions = ch_versions.mix(FASTQ_SCREEN.out.versions.first())
-        ch_fastq_screen_txt = FASTQ_SCREEN.out.txt.map { _meta, txt -> txt }
+        FASTQSCREEN_FASTQSCREEN(ch_fastq_flat, ch_fastq_screen_config)
+        ch_versions = ch_versions.mix(FASTQSCREEN_FASTQSCREEN.out.versions_fastqscreen.first())
+        ch_fastq_screen_txt = FASTQSCREEN_FASTQSCREEN.out.txt.map { _meta, txt -> txt }
     }
 
     //
@@ -64,11 +64,24 @@ workflow BCL_QC_SINGLE_RUN {
         .mix(ch_fastq_screen_txt)
         .mix(BCLCONVERT.out.reports.map { _meta, reports -> reports }.flatten())
         .collect()
+        .ifEmpty([])
     
-    // Create MultiQC input with meta
+    // Create MultiQC input with meta - nf-core module expects:
+    // tuple val(meta), path(multiqc_files), path(multiqc_config), path(multiqc_logo), path(replace_names), path(sample_names)
     def ch_multiqc_input = ch_input
-        .map { meta, _samplesheet, _run_dir -> meta }
+        .first()
+        .map { meta, _samplesheet, _run_dir -> tuple(meta) }
         .combine(ch_multiqc_files)
+        .map { meta, files ->
+            tuple(
+                meta,
+                files,
+                [],  // multiqc_config
+                [],  // multiqc_logo
+                [],  // replace_names
+                []   // sample_names
+            )
+        }
     
     MULTIQC(ch_multiqc_input)
     ch_versions = ch_versions.mix(MULTIQC.out.versions)
