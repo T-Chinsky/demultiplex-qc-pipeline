@@ -1,87 +1,229 @@
 #!/usr/bin/env nextflow
-
 /*
-========================================================================================
-    BCL CONVERT + QC PIPELINE
-========================================================================================
-    Workflow to demultiplex BCL files and perform comprehensive quality control
-    - BCL Convert: Demultiplex Illumina BCL files to FASTQ
-    - FastQC: Quality control of FASTQ files
-    - fastq_screen: Contamination screening
-    - MultiQC: Aggregate all QC reports (one per run)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    nf-core/bclconvert
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Github : https://github.com/T-Chinsky/bcl-convert-pipeline
+    Website: https://nf-co.re/bclconvert
 ----------------------------------------------------------------------------------------
 */
 
-nextflow.enable.dsl = 2
-
 /*
-========================================================================================
-    NAMED WORKFLOW FOR PIPELINE
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BCL_QC_SINGLE_RUN } from './subworkflows/bcl_qc_single_run'
+include { BCLCONVERT  } from './workflows/bclconvert'
 
 /*
-========================================================================================
-    MAIN WORKFLOW
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    HELPER FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+def helpMessage() {
+    def command = "nextflow run ${workflow.manifest.name} --input samplesheet.csv --outdir <OUTDIR> -profile docker"
+    return """
+    ========================================
+    ${workflow.manifest.name} v${workflow.manifest.version}
+    ========================================
+    
+    Usage:
+        ${command}
+
+    Required arguments:
+        --input                       Path to comma-separated file containing information about the samples and BCL run directories
+
+    Optional arguments:
+        --outdir                      Output directory for results (default: './results')
+        --fastq_screen_config         Path to FastQ Screen configuration file (optional)
+        
+    Resource options:
+        --max_cpus                    Maximum number of CPUs (default: ${params.max_cpus})
+        --max_memory                  Maximum memory (default: ${params.max_memory})
+        --max_time                    Maximum time (default: ${params.max_time})
+
+    Generic options:
+        --help                        Display this help message
+        --version                     Display pipeline version
+        --publish_dir_mode            Method for publishing results (default: 'copy')
+
+    """.stripIndent()
+}
+
+def paramsSummary() {
+    return """
+    ========================================
+    ${workflow.manifest.name} v${workflow.manifest.version}
+    ========================================
+    Input CSV               : ${params.input}
+    Output directory        : ${params.outdir}
+    FastQ Screen config     : ${params.fastq_screen_config ?: 'Not provided (skipping)'}
+    Max CPUs                : ${params.max_cpus}
+    Max memory              : ${params.max_memory}
+    Max time                : ${params.max_time}
+    Publish mode            : ${params.publish_dir_mode}
+    ========================================
+    """.stripIndent()
+}
+
+def validateParams() {
+    // Check mandatory parameters
+    if (!params.input) {
+        log.error "ERROR: Please provide an input CSV file with --input"
+        System.exit(1)
+    }
+
+    // Check input file exists
+    def input_file = file(params.input, checkIfExists: false)
+    if (!input_file.exists()) {
+        log.error "ERROR: Input file does not exist: ${params.input}"
+        System.exit(1)
+    }
+
+    // Check FastQ Screen config if provided
+    if (params.fastq_screen_config) {
+        def config_file = file(params.fastq_screen_config, checkIfExists: false)
+        if (!config_file.exists()) {
+            log.error "ERROR: FastQ Screen config file does not exist: ${params.fastq_screen_config}"
+            System.exit(1)
+        }
+    }
+}
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    NAMED WORKFLOWS FOR PIPELINE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//
+// WORKFLOW: Run main analysis pipeline
+//
+workflow NFCORE_BCLCONVERT {
+
+    take:
+    ch_input         // channel: [ val(meta), path(samplesheet), path(run_dir) ]
+    ch_fastq_screen_config  // channel: path(fastq_screen_config) or empty
+
+    main:
+
+    //
+    // WORKFLOW: Run pipeline
+    //
+    BCLCONVERT(
+        ch_input,
+        ch_fastq_screen_config
+    )
+
+    emit:
+    multiqc = BCLCONVERT.out.multiqc      // channel: [ val(meta), path(html) ]
+    versions = BCLCONVERT.out.versions    // channel: [ path(versions.yml) ]
+
+}
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    RUN MAIN WORKFLOW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
 workflow {
-    // Validate required parameters
-    if (!params.input) {
-        error "ERROR: --input parameter is required (CSV with run_id,samplesheet,run_dir,multiqc_title)"
+
+    main:
+
+    //
+    // Print help message if requested
+    //
+    if (params.help) {
+        log.info helpMessage()
+        System.exit(0)
     }
 
-    // Parse the input CSV
-    def input_csv = file(params.input)
-    if (!input_csv.exists()) {
-        error "ERROR: Input CSV does not exist: ${params.input}"
+    //
+    // Print version if requested
+    //
+    if (params.version) {
+        log.info "${workflow.manifest.name} ${workflow.manifest.version}"
+        System.exit(0)
     }
+
+    //
+    // Validate parameters
+    //
+    validateParams()
+
+    //
+    // Print parameter summary
+    //
+    log.info paramsSummary()
+
+    //
+    // Parse input CSV and create channels
+    //
+    def input_csv = file(params.input, checkIfExists: true)
     
-    // Prepare fastq_screen config if provided
-    def fastq_screen_config = null
-    if (params.fastq_screen_config) {
-        def config_file = file(params.fastq_screen_config)
-        if (!config_file.exists()) {
-            error "ERROR: fastq_screen config does not exist: ${params.fastq_screen_config}"
-        }
-        fastq_screen_config = config_file
-    }
-
-    // Create channel with run metadata tuples
-    def runs_ch = channel
+    def ch_input = channel
         .fromPath(input_csv)
         .splitCsv(header: true)
         .map { row ->
-            def run_id = row.run_id
+            // Create meta map following nf-core conventions
+            def meta = [
+                id: row.run_id,
+                multiqc_title: row.multiqc_title ?: row.run_id
+            ]
             def samplesheet = file(row.samplesheet, checkIfExists: true)
             def run_dir = file(row.run_dir, checkIfExists: true)
-            def multiqc_title = row.multiqc_title ?: run_id
-            tuple(run_id, samplesheet, run_dir, multiqc_title)
+            
+            tuple(meta, samplesheet, run_dir)
         }
 
-    // Process each run through the BCL QC subworkflow
-    BCL_QC_SINGLE_RUN(
-        runs_ch.map { v -> v[0] },  // run_id
-        runs_ch.map { v -> v[1] },  // samplesheet
-        runs_ch.map { v -> v[2] },  // run_dir
-        runs_ch.map { v -> v[3] },  // multiqc_title
-        fastq_screen_config
+    //
+    // Prepare FastQ Screen config channel
+    //
+    def ch_fastq_screen_config = params.fastq_screen_config 
+        ? channel.fromPath(params.fastq_screen_config, checkIfExists: true)
+        : channel.empty()
+
+    //
+    // WORKFLOW: Run main workflow
+    //
+    NFCORE_BCLCONVERT(
+        ch_input,
+        ch_fastq_screen_config
     )
 
-    // Print completion message
+    //
+    // Completion handlers
+    //
     workflow.onComplete {
-        println ""
-        println "Pipeline completed at: ${workflow.complete}"
-        println "Execution status: ${workflow.success ? 'SUCCESS' : 'FAILED'}"
-        println "Execution duration: ${workflow.duration}"
+        log.info """
+        ========================================
+        Pipeline completed!
+        ========================================
+        Status:   ${workflow.success ? 'SUCCESS' : 'FAILED'}
+        Time:     ${workflow.complete}
+        Duration: ${workflow.duration}
+        Output:   ${params.outdir}
+        ========================================
+        """.stripIndent()
     }
 
     workflow.onError {
-        println ""
-        println "Pipeline execution failed!"
-        println "Error message: ${workflow.errorMessage}"
+        log.error """
+        ========================================
+        Pipeline failed!
+        ========================================
+        Error:    ${workflow.errorMessage}
+        Report:   ${workflow.errorReport}
+        ========================================
+        """.stripIndent()
     }
 }
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    THE END
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/

@@ -1,19 +1,17 @@
 process BCLCONVERT {
-    tag "${run_id}"
+    tag "${meta.id}"
     label 'process_high'
     container 'community.wave.seqera.io/library/bclconvert:4.2.7--abc21b231d8db3e0'
-    publishDir "${params.outdir}/${run_id}/bclconvert", mode: 'copy'
+    publishDir "${params.outdir}/${meta.id}/bclconvert", mode: params.publish_dir_mode
 
     input:
-    val run_id
-    path samplesheet
-    path run_dir
+    tuple val(meta), path(samplesheet), path(run_dir)
 
     output:
-    path 'output/**_S*_R*.fastq.gz', emit: fastq
-    path 'output/Reports', emit: reports
-    path 'output/Logs', emit: logs
-    path 'output/InterOp/*.bin', optional: true, emit: interop
+    tuple val(meta), path('output/**_S*_R*.fastq.gz'), emit: fastq
+    tuple val(meta), path('output/Reports'), emit: reports
+    tuple val(meta), path('output/Logs'), emit: logs
+    tuple val(meta), path('output/InterOp/*.bin'), optional: true, emit: interop
     path 'versions.yml', emit: versions
 
     script:
