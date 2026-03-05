@@ -5,6 +5,7 @@ A Nextflow DSL2 pipeline for demultiplexing Illumina BCL files and performing co
 ## Features
 
 - ✅ **BCL Convert**: Demultiplex Illumina BCL files to FASTQ format
+- ✅ **Flexible Input**: Use your existing BCL Convert samplesheets (any format accepted by bcl-convert)
 - ✅ **FastQC**: Quality control assessment of sequencing reads
 - ✅ **fastq_screen**: Optional contamination screening
 - ✅ **MultiQC**: Aggregated HTML reports combining all QC metrics
@@ -23,16 +24,18 @@ A Nextflow DSL2 pipeline for demultiplexing Illumina BCL files and performing co
 
 ```bash
 nextflow run main.nf \
-  --samplesheet samplesheet.csv \
+  --samplesheet /path/to/SampleSheet.csv \
   --run_dir /path/to/bcl/run \
   --outdir results
 ```
+
+**Note**: `--samplesheet` should point to your BCL Convert samplesheet file (the one that came with your sequencing run or your custom samplesheet). The pipeline passes this directly to `bcl-convert`, so any format accepted by BCL Convert will work.
 
 ### With Contamination Screening
 
 ```bash
 nextflow run main.nf \
-  --samplesheet samplesheet.csv \
+  --samplesheet /path/to/SampleSheet.csv \
   --run_dir /path/to/bcl/run \
   --outdir results \
   --fastq_screen_config fastq_screen.conf
@@ -43,14 +46,26 @@ nextflow run main.nf \
 ```bash
 nextflow run main.nf \
   -profile slurm \
-  --samplesheet samplesheet.csv \
+  --samplesheet /path/to/SampleSheet.csv \
   --run_dir /path/to/bcl/run
 ```
+
+## Input Files
+
+### Samplesheet Format
+
+The `--samplesheet` parameter accepts **any BCL Convert-compatible samplesheet**. This includes:
+
+- Standard Illumina `SampleSheet.csv` files from the sequencing run
+- Custom samplesheets with `[BCLConvert_Data]` section
+- Simple CSV files with just the data columns (for older bcl2fastq compatibility)
+
+The pipeline passes your samplesheet directly to `bcl-convert`, so you can use any formatting or settings that `bcl-convert` accepts. See the included `samplesheet_example.csv` for a standard format example.
 
 ## Parameters
 
 ### Required
-- `--samplesheet`: Path to BCL Convert samplesheet CSV file
+- `--samplesheet`: Path to your BCL Convert samplesheet (e.g., `SampleSheet.csv` from the sequencing run)
 - `--run_dir`: Path to Illumina BCL run directory
 
 ### Optional

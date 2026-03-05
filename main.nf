@@ -27,12 +27,12 @@ include { MULTIQC } from './modules/multiqc'
 
 workflow BCL_QC {
     take:
-    samplesheet  // path: samplesheet CSV file
+    samplesheet  // path: BCL Convert samplesheet (any format accepted by bcl-convert)
     run_dir      // path: BCL run directory
     fastq_screen_config  // path: fastq_screen config file (optional)
 
     main:
-    // Run BCL Convert
+    // Run BCL Convert with the provided samplesheet
     BCLCONVERT(samplesheet, run_dir)
 
     // Prepare FASTQ files for QC - flatten the glob output into individual files with metadata
