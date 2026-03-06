@@ -12,16 +12,26 @@ The detection system uses a priority-based approach to reliably identify samples
 
 The detection script (`bin/detect_samplesheet_version.py`) uses the following priority order:
 
-### Priority 1: Section Headers (Most Reliable)
-- **v1 indicator**: Presence of `[Reads]` section
+### Priority 1: BCLConvert-Specific Headers (PRIMARY MARKER)
 - **v2 indicator**: Presence of `[BCLConvert_Settings]` OR `[BCLConvert_Data]` section
+  - These sections are **ONLY** present in BCL Convert samplesheets
+  - Most reliable indicator of v2 format
 
-### Priority 2: Version Markers
-- **v1 indicator**: `IEMFileVersion,4` in `[Header]` section
+### Priority 2: Standard Section Names (bcl2fastq markers)
+- **v1 indicator**: Presence of `[Data]` section (not `[BCLConvert_Data]`)
+  - bcl2fastq uses `[Data]`, BCL Convert uses `[BCLConvert_Data]`
+- **v1 indicator**: Presence of `[Settings]` section (not `[BCLConvert_Settings]`)
+  - bcl2fastq uses `[Settings]`, BCL Convert uses `[BCLConvert_Settings]`
+
+### Priority 3: Version Markers
+- **v1 indicator**: `IEMFileVersion,` (any version number) in `[Header]` section
 - **v2 indicator**: `FileFormatVersion,2` in `[Header]` section
 
 ### Default Behavior
 If no markers are found, defaults to **v2** (bclconvert) as the newer standard.
+
+### Important Note: [Reads] Section
+The `[Reads]` section can appear in **both** bcl2fastq and BCL Convert samplesheets, so it is **not** used for format detection.
 
 ## Implementation
 
@@ -90,15 +100,24 @@ Workflow,GenerateFASTQ
 151
 151
 
+[Settings]
+Adapter,AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
+
 [Data]
 Sample_ID,Sample_Name,index,index2
 Sample1,Test1,AAAAAAAA,TTTTTTTT
 ```
 
+**Key indicators**: `[Data]` section (not `[BCLConvert_Data]`), `[Settings]` section (not `[BCLConvert_Settings]`), and `IEMFileVersion,` in header.
+
 ### v2 Samplesheet (→ bclconvert)
 ```csv
 [Header]
 FileFormatVersion,2
+
+[Reads]
+151
+151
 
 [BCLConvert_Settings]
 SoftwareVersion,4.2.7
@@ -109,11 +128,15 @@ Sample_ID,Index,Index2
 Sample1,AAAAAAAA,TTTTTTTT
 ```
 
+**Key indicators**: `[BCLConvert_Settings]` and/or `[BCLConvert_Data]` sections. Note that `[Reads]` can appear in both v1 and v2 formats.
+
 ## Testing
 
 The detection logic has been thoroughly tested with:
-- v1 samplesheets with `[Reads]` sections
-- v2 samplesheets with `[BCLConvert_Settings]` and `[BCLConvert_Data]`
+- v1 samplesheets with `[Data]` and `[Settings]` sections
+- v1 samplesheets with `IEMFileVersion,` markers
+- v2 samplesheets with `[BCLConvert_Settings]` and `[BCLConvert_Data]` sections
+- Samplesheets with `[Reads]` sections in both v1 and v2 formats
 - Edge cases with minimal markers
 - Mixed v1 and v2 samplesheets in the same run
 
