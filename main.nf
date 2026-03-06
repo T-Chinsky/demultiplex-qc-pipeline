@@ -246,6 +246,19 @@ workflow {
         Output:   ${params.outdir}
         ========================================
         """.stripIndent()
+        
+        // Auto-cleanup work directory on successful completion
+        if (workflow.success && !params.debug) {
+            log.info "Cleaning up work directory: ${workflow.workDir}"
+            def cleanup_cmd = "rm -rf ${workflow.workDir}"
+            def cleanup_proc = cleanup_cmd.execute()
+            cleanup_proc.waitFor()
+            if (cleanup_proc.exitValue() == 0) {
+                log.info "Work directory cleaned successfully"
+            } else {
+                log.warn "Failed to clean work directory. You may need to manually remove: ${workflow.workDir}"
+            }
+        }
     }
 
     workflow.onError {
