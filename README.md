@@ -68,6 +68,19 @@ nextflow run main.nf --input runs.csv --demux_tool bcl2fastq
 **Mixed Batches:**
 You can process runs with different samplesheet formats in the same batch - the pipeline will automatically use the correct tool for each run!
 
+### With BCL Convert Options
+
+Control BCL Convert output organization:
+
+```bash
+# Organize output by sample/project with combined lanes
+nextflow run main.nf \
+  --input runs.csv \
+  --outdir results \
+  --bcl_sampleproject_subdirectories \
+  --no_lane_splitting
+```
+
 ### With Contamination Screening
 
 First, set up fastq_screen databases following the [FASTQ_SCREEN_SETUP.md](FASTQ_SCREEN_SETUP.md) guide.
@@ -205,11 +218,20 @@ See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete example
 - `--input`: Path to input CSV file listing runs to process (see [INPUT_FORMAT.md](INPUT_FORMAT.md))
 
 ### Optional
+
+#### General Parameters
 - `--outdir`: Output directory (default: `./results`)
 - `--demux_tool`: Demultiplexer to use: `'auto'` (default, auto-detect), `'bclconvert'`, or `'bcl2fastq'`
 - `--fastq_screen_config`: Path to fastq_screen config (enables contamination screening)
-- `--bcl_sampleproject_subdirectories`: Create subdirectories by sample project (default: `false`)
-- `--no_lane_splitting`: Disable lane splitting in BCL Convert (default: `false`)
+
+#### BCL Convert Specific Parameters
+- `--bcl_sampleproject_subdirectories`: Create subdirectories organized by sample/project in BCL Convert output (default: `false`)
+  - When enabled: organizes output as `output/Sample_Project/Sample_ID/`
+  - When disabled: all files in flat `output/` directory
+- `--no_lane_splitting`: Combine lanes in BCL Convert output files (default: `false`)
+  - When enabled: generates `Sample_S1_R1_001.fastq.gz` (lanes combined)
+  - When disabled: generates `Sample_S1_L001_R1_001.fastq.gz`, `Sample_S1_L002_R1_001.fastq.gz`, etc.
+  - Note: Only applies to BCL Convert, not bcl2fastq
 
 ### Resource Limits
 - `--max_cpus`: Maximum CPUs (default: `32`)
