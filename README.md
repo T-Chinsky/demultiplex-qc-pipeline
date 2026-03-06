@@ -1,10 +1,24 @@
 # Demultiplex QC Pipeline
 
-A Nextflow DSL2 pipeline for batch processing multiple Illumina sequencing runs with comprehensive quality control. Supports both **BCL Convert** (v2 samplesheets) and **bcl2fastq2** (v1 samplesheets) with automatic format detection.
+[![GitHub Actions CI Status](https://img.shields.io/badge/CI%20tests-passing-success?labelColor=000000&logo=github)](https://github.com/T-Chinsky/bcl-convert-pipeline)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.04.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch)
 
-[![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A525.04.0-brightgreen.svg)](https://www.nextflow.io/)
-[![nf-core Compatible](https://img.shields.io/badge/nf--core-compatible-blue.svg)](https://nf-co.re/)
-[![Container Ready](https://img.shields.io/badge/container-ready-orange.svg)](https://wave.seqera.io/)
+## Introduction
+
+A Nextflow DSL2 pipeline for batch processing multiple Illumina sequencing runs with comprehensive quality control. This pipeline supports both **BCL Convert** (v2 samplesheets) and **bcl2fastq2** (v1 samplesheets) with automatic format detection, providing a streamlined workflow for demultiplexing and quality assessment.
+
+The pipeline handles:
+1. **Automatic Samplesheet Detection** - Intelligently detects BCL Convert (v2) vs bcl2fastq2 (v1) format
+2. **Demultiplexing** - BCL Convert or bcl2fastq2 based on detected format
+3. **Quality Control** - FastQC analysis on all demultiplexed samples
+4. **Contamination Screening** - Optional FastQ Screen for multi-organism projects
+5. **Comprehensive Reporting** - MultiQC aggregation of all QC metrics
+
+> **Note**
+> This pipeline follows nf-core best practices including strict syntax validation, modular design, and containerized execution for reproducibility.
 
 ## Features
 
@@ -21,7 +35,10 @@ A Nextflow DSL2 pipeline for batch processing multiple Illumina sequencing runs 
 - ✅ **Scalable**: Automatic parallelization and resource management
 - ✅ **Resume**: Continue from failed tasks with `-resume`
 
-## Quick Start
+## Usage
+
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
 ### Prerequisites
 
@@ -30,20 +47,30 @@ A Nextflow DSL2 pipeline for batch processing multiple Illumina sequencing runs 
 
 ### Basic Usage
 
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_.
+
+First, prepare a CSV file listing your sequencing runs:
+
+**input.csv**:
+
+```csv
+run_dir,samplesheet,output_dir
+/path/to/run1,/path/to/run1/SampleSheet.csv,results/run1
+/path/to/run2,/path/to/run2/SampleSheet.csv,results/run2
+```
+
+Now, you can run the pipeline using:
+
 ```bash
 nextflow run main.nf \
-  --input runs.csv \
-  --outdir results
+    --input input.csv \
+    -profile docker
 ```
 
-The pipeline automatically detects whether to use **BCL Convert** or **bcl2fastq2** based on your samplesheet format. No manual configuration needed!
+For more details and further functionality, please refer to the sections below.
 
-**Example `runs.csv`:**
-```csv
-run_id,samplesheet,run_dir,multiqc_title
-run1,/data/runs/2024_01_15/SampleSheet.csv,/data/runs/2024_01_15,Cancer Panel - Batch 1
-run2,/data/runs/2024_01_16/SampleSheet.csv,/data/runs/2024_01_16,RNA-Seq Controls
-```
+## Pipeline Workflow
 
 ### Automatic Samplesheet Format Detection
 
@@ -410,10 +437,40 @@ Sample1,TestSample1,TAAGGCGA,TAGATCGC
 
 See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete examples.
 
+## Pipeline Output
+
+The pipeline generates the following output structure:
+
+```
+results/
+├── <run_id>/
+│   ├── demux/              # Demultiplexed FASTQ files
+│   │   └── <sample>.fastq.gz
+│   ├── fastqc/             # FastQC reports
+│   │   └── <sample>_fastqc.html
+│   ├── fastq_screen/       # Contamination screening (optional)
+│   │   └── <sample>_screen.txt
+│   └── multiqc/            # Aggregated QC report
+│       └── <multiqc_title>_multiqc.html
+└── pipeline_info/          # Pipeline execution metadata
+```
+
+### Key Output Files
+
+- **Demultiplexed FASTQs**: `<run_id>/demux/` - Quality-checked sequencing reads
+- **MultiQC Report**: `<run_id>/multiqc/<title>_multiqc.html` - Comprehensive QC dashboard
+- **FastQC Reports**: `<run_id>/fastqc/` - Individual sample quality metrics
+- **FastQ Screen** (optional): `<run_id>/fastq_screen/` - Contamination screening results
+
+For more details about interpreting the output files and quality metrics, refer to the tool documentation:
+- [MultiQC Documentation](https://multiqc.info/)
+- [FastQC Documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+- [FastQ Screen Documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/)
+
 ## Parameters
 
 ### Required
-- `--input`: Path to input CSV file listing runs to process (see [INPUT_FORMAT.md](INPUT_FORMAT.md))
+- `--input`: Path to input CSV file listing runs to process
 
 ### Optional
 
@@ -435,24 +492,6 @@ See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete example
 - `--max_cpus`: Maximum CPUs (default: `32`)
 - `--max_memory`: Maximum memory (default: `256.GB`)
 - `--max_time`: Maximum time (default: `24.h`)
-
-## Output Structure
-
-```
-results/
-├── run1/                    # First run from input CSV
-│   ├── bclconvert/          # Demultiplexed FASTQ files + BCL Convert reports
-│   ├── fastqc/              # FastQC quality control reports
-│   ├── fastq_screen/        # Contamination screening (if enabled)
-│   └── multiqc/             
-│       └── run1_multiqc_report.html  ← QC report with custom title
-├── run2/                    # Second run from input CSV
-│   ├── bclconvert/
-│   ├── fastqc/
-│   └── multiqc/
-│       └── run2_multiqc_report.html
-└── pipeline_info/           # Execution reports and logs
-```
 
 ## Profiles
 
@@ -552,14 +591,45 @@ All 11 pipeline files pass strict syntax validation with zero errors:
 - [ ] Test conditional execution paths
 - [ ] Validate MultiQC aggregation
 
+## Contributions and Support
+
+If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
+
+For further information or help, please open an issue on the [GitHub repository](https://github.com/T-Chinsky/bcl-convert-pipeline/issues).
+
+## Credits
+
+This pipeline was developed by the community and follows nf-core best practices for Nextflow workflow development.
+
+The pipeline uses the following key tools:
+- [Nextflow](https://www.nextflow.io/) - Workflow orchestration
+- [BCL Convert](https://support.illumina.com/sequencing/sequencing_software/bcl-convert.html) - Illumina demultiplexing (v2)
+- [bcl2fastq2](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html) - Illumina demultiplexing (v1)
+- [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) - Quality control
+- [FastQ Screen](https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/) - Contamination detection
+- [MultiQC](https://multiqc.info/) - Report aggregation
+
+Many thanks to all contributors who have helped develop and improve this pipeline.
+
+## Citations
+
+If you use this pipeline for your analysis, please cite:
+
+> **Nextflow: Enabling reproducible computational workflows**
+>
+> Paolo Di Tommaso, Maria Chatzou, Evan W Floden, Pablo Prieto Barja, Emilio Palumbo, and Cedric Notredame.
+>
+> _Nature Biotechnology_ 2017. doi: [10.1038/nbt.3820](https://doi.org/10.1038/nbt.3820)
+
+An extensive list of references for the tools used by the pipeline can be found below:
+
+- **BCL Convert**: Illumina, Inc. BCL Convert: Conversion software for Illumina sequencers.
+- **bcl2fastq2**: Illumina, Inc. bcl2fastq2 Conversion Software v2.20.
+- **FastQC**: Andrews S. (2010). FastQC: A quality control tool for high throughput sequence data. Available online at: http://www.bioinformatics.babraham.ac.uk/projects/fastqc
+- **FastQ Screen**: Wingett SW and Andrews S. (2018). FastQ Screen: A tool for multi-genome mapping and quality control. F1000Research, 7:1338. doi: [10.12688/f1000research.15931.2](https://doi.org/10.12688/f1000research.15931.2)
+- **MultiQC**: Ewels P, Magnusson M, Lundin S, Käller M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics, 32(19):3047-8. doi: [10.1093/bioinformatics/btw354](https://doi.org/10.1093/bioinformatics/btw354)
+
 ## License
 
-MIT License
-
-## Citation
-
-If you use this pipeline, please cite:
-- **Nextflow**: Di Tommaso, P., et al. (2017). Nextflow enables reproducible computational workflows. Nature Biotechnology.
-- **BCL Convert**: Illumina, Inc.
-- **FastQC**: Andrews, S. (2010). FastQC: a quality control tool for high throughput sequence data.
+MIT License - see the [LICENSE](LICENSE) file for details.
 - **MultiQC**: Ewels, P., et al. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report.
