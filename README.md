@@ -42,14 +42,31 @@ run1,/data/runs/2024_01_15/SampleSheet.csv,/data/runs/2024_01_15,Cancer Panel - 
 run2,/data/runs/2024_01_16/SampleSheet.csv,/data/runs/2024_01_16,RNA-Seq Controls
 ```
 
-### Samplesheet Format Support
+### Automatic Format Detection
 
-The pipeline supports both samplesheet formats:
+The pipeline intelligently detects the samplesheet format and chooses the appropriate demultiplexer:
 
-- **v2 (BCL Convert)**: Samplesheets with `[BCLConvert_Settings]` or `[BCLConvert_Data]` sections
-- **v1 (bcl2fastq2)**: Samplesheets with `[Reads]` section or `IEMFileVersion=4`
+**Detection Logic:**
+1. **BCL Convert (v2)** is used when the samplesheet contains:
+   - `[BCLConvert_Settings]` section, OR
+   - `[BCLConvert_Data]` section
 
-The pipeline automatically detects the format and uses the appropriate demultiplexer. You can also manually specify the tool with `--demux_tool` if needed.
+2. **bcl2fastq2 (v1)** is used when the samplesheet contains:
+   - `[Reads]` section (specifying read lengths), OR
+   - `IEMFileVersion=4` in the header
+
+**Manual Override:**
+You can bypass auto-detection using the `--demux_tool` parameter:
+```bash
+# Force BCL Convert
+nextflow run main.nf --input runs.csv --demux_tool bclconvert
+
+# Force bcl2fastq2
+nextflow run main.nf --input runs.csv --demux_tool bcl2fastq
+```
+
+**Mixed Batches:**
+You can process runs with different samplesheet formats in the same batch - the pipeline will automatically use the correct tool for each run!
 
 ### With Contamination Screening
 
@@ -103,7 +120,7 @@ See [INPUT_FORMAT.md](INPUT_FORMAT.md) and `example_input.csv` for complete docu
 
 ### Samplesheet Formats
 
-The pipeline supports both Illumina samplesheet formats:
+The pipeline supports both Illumina samplesheet formats with automatic detection:
 
 #### BCL Convert (v2) Format
 ```csv
@@ -118,6 +135,12 @@ Sample_ID,Index,Index2,Lane
 Sample1,TAAGGCGA,TAGATCGC,1
 ```
 
+**Key characteristics:**
+- Uses `[BCLConvert_Settings]` and `[BCLConvert_Data]` sections (required)
+- Always includes Sample_ID in output file names
+- Stricter validation - aborts on invalid settings
+- Preferred for new workflows
+
 #### bcl2fastq2 (v1) Format
 ```csv
 [Header]
@@ -131,6 +154,24 @@ IEMFileVersion,4
 Sample_ID,Sample_Name,index,index2
 Sample1,TestSample1,TAAGGCGA,TAGATCGC
 ```
+
+**Key characteristics:**
+- Uses `[Settings]` and `[Data]` sections
+- Less strict about header names
+- Typically warns (not aborts) on invalid settings
+- Compatible with legacy workflows
+
+#### Format Comparison
+
+| Feature | bcl2fastq2 (v1) | BCL Convert (v2) |
+|---------|-----------------|------------------|
+| **Version** | v1 (legacy) | v1 & v2 supported (v2 preferred) |
+| **Section Names** | `[Settings]`, `[Data]` | `[BCLConvert_Settings]`, `[BCLConvert_Data]` |
+| **File Naming** | Variable | Always includes Sample_ID |
+| **Error Handling** | Warns on invalid settings | Aborts on invalid settings |
+| **Header Strictness** | Flexible | Strict |
+| **Required Columns** | Lane, Sample_ID, Index1/Index2 | Lane, Sample_ID, Index1/Index2 |
+| **Optional Columns** | Sample_Name, Sample_Project | Sample_Name, Sample_Project |
 
 See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete examples.
 
