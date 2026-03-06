@@ -274,11 +274,18 @@ The repository includes `custom.config` as a template for SLURM HPC clusters. Co
 
 ## Container Images
 
-All tools use pre-built Wave containers:
-- BCL Convert: 4.2.7
-- FastQC: 0.12.1
-- fastq_screen: 0.16.0
-- MultiQC: 1.33
+All tools use pre-built containers for reproducibility:
+
+### Demultiplexing Tools
+- **BCL Convert**: `ubgbc/bcl-convert:4.4.6`
+- **bcl2fastq2**: `community.wave.seqera.io/library/bcl2fastq2:2.20.0--1d9942001bacdbaa`
+
+### Quality Control Tools
+- **FastQC**: `community.wave.seqera.io/library/fastqc:0.12.1--aa717e1a9d994d74`
+- **fastq_screen**: `community.wave.seqera.io/library/fastq-screen:0.16.0--3b0a59ab6ab18664`
+- **MultiQC**: `community.wave.seqera.io/library/multiqc:1.33--9daaf37cc59ba7dc`
+
+All Wave containers are automatically pulled and cached on first use.
 
 ## License
 
