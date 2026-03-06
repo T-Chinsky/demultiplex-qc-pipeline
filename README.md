@@ -1,4 +1,4 @@
-# Demultiplex QC Pipeline
+# Demultiplex & QC Pipeline
 
 [![GitHub Actions CI Status](https://img.shields.io/badge/CI%20tests-passing-success?labelColor=000000&logo=github)](https://github.com/T-Chinsky/bcl-convert-pipeline)
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.04.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
