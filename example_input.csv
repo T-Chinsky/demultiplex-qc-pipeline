@@ -1,0 +1,4 @@
+run_id,samplesheet,run_dir,multiqc_title
+run1,/path/to/run1/SampleSheet.csv,/path/to/run1/bcl_dir,Experiment A - Run 1
+run2,/path/to/run2/SampleSheet.csv,/path/to/run2/bcl_dir,Experiment A - Run 2
+run3,/path/to/run3/SampleSheet.csv,/path/to/run3/bcl_dir,Experiment B - Control
