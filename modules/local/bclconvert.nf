@@ -1,7 +1,7 @@
 process BCLCONVERT {
     tag "${meta.id}"
     label 'process_high'
-    container 'community.wave.seqera.io/library/bclconvert:4.2.7--abc21b231d8db3e0'
+    container 'ubgbc/bcl-convert:4.4.6'
     publishDir "${params.outdir}/${meta.id}/bclconvert", mode: params.publish_dir_mode
 
     input:
@@ -49,6 +49,6 @@ process BCLCONVERT {
     touch output/Logs/Errors.log
     touch output/InterOp/IndexMetricsOut.bin
     echo "${task.process}:" > versions.yml
-    echo "  bclconvert: 4.2.7" >> versions.yml
+    echo "  bclconvert: 4.4.6" >> versions.yml
     """
 }
