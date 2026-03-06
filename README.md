@@ -79,6 +79,38 @@ nextflow run main.nf \
   --fastq_screen_config /path/to/fastq_screen.conf
 ```
 
+### On HPC Cluster with SLURM
+
+Use a custom configuration file to specify cluster-specific settings:
+
+```bash
+nextflow run main.nf \
+  -c custom.config \
+  --input runs.csv \
+  --outdir results
+```
+
+**Template `custom.config`** (included in repository):
+```groovy
+executor {
+    name = "slurm"
+    queueSize = 2000
+}
+
+process {
+    // Modify these SLURM options to match your cluster
+    clusterOptions = '--partition <partition> --account <account> --qos <qos>'
+    maxRetries = 10
+}
+
+singularity {
+    // Uncomment and set your cluster's cache directory
+    // cacheDir = '/path/to/singularity/cache'
+}
+```
+
+Copy and modify `custom.config` to match your cluster's configuration (partition names, account, paths, etc.).
+
 ## FastQ Screen Setup (Optional)
 
 For contamination screening, you'll need to download and build reference genome databases. See the comprehensive guide:
@@ -207,6 +239,16 @@ results/
 - `standard`: Local execution (default)
 - `docker`: Docker containers
 - `singularity`: Singularity containers
+
+### Custom Configurations
+
+For HPC clusters or custom execution environments, use the `-c` option to specify a custom configuration file:
+
+```bash
+nextflow run main.nf -c custom.config --input runs.csv
+```
+
+The repository includes `custom.config` as a template for SLURM HPC clusters. Copy and modify this file to match your cluster's requirements (partition names, account, paths, etc.).
 
 ## Container Images
 
