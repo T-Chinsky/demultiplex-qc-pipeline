@@ -1,17 +1,18 @@
 # BCL Convert + QC Pipeline
 
-A Nextflow DSL2 pipeline for batch processing multiple Illumina BCL conversion runs with comprehensive quality control.
+A Nextflow DSL2 pipeline for batch processing multiple Illumina BCL conversion runs with comprehensive quality control. Supports both **BCL Convert** (v2 samplesheets) and **bcl2fastq2** (v1 samplesheets) with automatic format detection.
 
 ## Features
 
+- ✅ **Dual Demultiplexer Support**: Automatically detects and uses BCL Convert or bcl2fastq2 based on samplesheet format
+- ✅ **Automatic Format Detection**: Seamlessly handles v1 (bcl2fastq2) and v2 (BCL Convert) samplesheet formats
 - ✅ **Batch Processing**: Process multiple BCL runs simultaneously from a single CSV input
-- ✅ **BCL Convert**: Demultiplex Illumina BCL files to FASTQ format
-- ✅ **Direct Samplesheet Support**: Use your existing BCL Convert samplesheets (any format accepted by bcl-convert)
+- ✅ **Direct Samplesheet Support**: Use your existing samplesheets without reformatting
 - ✅ **Custom MultiQC Titles**: Set descriptive report titles for each run
 - ✅ **FastQC**: Quality control assessment of sequencing reads
 - ✅ **fastq_screen**: Optional contamination screening
 - ✅ **MultiQC**: Separate QC reports for each run with custom titles
-- ✅ **Container-based**: Reproducible execution with Docker/Singularity
+- ✅ **Container-based**: Reproducible execution with Docker/Singularity via Wave containers
 - ✅ **Scalable**: Automatic parallelization and resource management
 - ✅ **Resume**: Continue from failed tasks with `-resume`
 
@@ -30,6 +31,8 @@ nextflow run main.nf \
   --outdir results
 ```
 
+The pipeline automatically detects whether to use **BCL Convert** or **bcl2fastq2** based on your samplesheet format. No manual configuration needed!
+
 See [INPUT_FORMAT.md](INPUT_FORMAT.md) for detailed CSV format documentation.
 
 **Example `runs.csv`:**
@@ -39,7 +42,14 @@ run1,/data/runs/2024_01_15/SampleSheet.csv,/data/runs/2024_01_15,Cancer Panel - 
 run2,/data/runs/2024_01_16/SampleSheet.csv,/data/runs/2024_01_16,RNA-Seq Controls
 ```
 
-**Note**: Samplesheets are passed directly to `bcl-convert`, so any format accepted by BCL Convert will work (no reformatting required).
+### Samplesheet Format Support
+
+The pipeline supports both samplesheet formats:
+
+- **v2 (BCL Convert)**: Samplesheets with `[BCLConvert_Settings]` or `[BCLConvert_Data]` sections
+- **v1 (bcl2fastq2)**: Samplesheets with `[Reads]` section or `IEMFileVersion=4`
+
+The pipeline automatically detects the format and uses the appropriate demultiplexer. You can also manually specify the tool with `--demux_tool` if needed.
 
 ### With Contamination Screening
 
@@ -91,15 +101,38 @@ The `--input` parameter accepts a CSV file with the following columns:
 
 See [INPUT_FORMAT.md](INPUT_FORMAT.md) and `example_input.csv` for complete documentation and examples.
 
-### Samplesheet Format
+### Samplesheet Formats
 
-The samplesheet files referenced in the input CSV can be **any BCL Convert-compatible format**:
+The pipeline supports both Illumina samplesheet formats:
 
-- Standard Illumina `SampleSheet.csv` files from the sequencing run
-- Custom samplesheets with `[BCLConvert_Data]` section
-- Simple CSV files with just the data columns (for older bcl2fastq compatibility)
+#### BCL Convert (v2) Format
+```csv
+[Header]
+FileFormatVersion,2
 
-The pipeline passes samplesheets directly to `bcl-convert`, so any formatting or settings that `bcl-convert` accepts will work. See `samplesheet_example.csv` for a standard format example.
+[BCLConvert_Settings]
+SoftwareVersion,4.2.7
+
+[BCLConvert_Data]
+Sample_ID,Index,Index2,Lane
+Sample1,TAAGGCGA,TAGATCGC,1
+```
+
+#### bcl2fastq2 (v1) Format
+```csv
+[Header]
+IEMFileVersion,4
+
+[Reads]
+151
+151
+
+[Data]
+Sample_ID,Sample_Name,index,index2
+Sample1,TestSample1,TAAGGCGA,TAGATCGC
+```
+
+See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete examples.
 
 ## Parameters
 
@@ -108,6 +141,7 @@ The pipeline passes samplesheets directly to `bcl-convert`, so any formatting or
 
 ### Optional
 - `--outdir`: Output directory (default: `./results`)
+- `--demux_tool`: Demultiplexer to use: `'auto'` (default, auto-detect), `'bclconvert'`, or `'bcl2fastq'`
 - `--fastq_screen_config`: Path to fastq_screen config (enables contamination screening)
 - `--bcl_sampleproject_subdirectories`: Create subdirectories by sample project (default: `false`)
 - `--no_lane_splitting`: Disable lane splitting in BCL Convert (default: `false`)
