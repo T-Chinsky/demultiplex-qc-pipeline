@@ -1,7 +1,7 @@
 process MULTIQC {
     tag "${meta.id}"
     label 'process_low'
-    container 'community.wave.seqera.io/library/multiqc:1.25.2--d33ec18a85c9e91f'
+    container 'community.wave.seqera.io/library/multiqc:1.33--9daaf37cc59ba7dc'
     publishDir "${params.outdir}/${meta.id}/multiqc", mode: params.publish_dir_mode
 
     input:
@@ -34,7 +34,7 @@ process MULTIQC {
     touch multiqc_data/multiqc_data.json
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        multiqc: 1.25.2
+        multiqc: 1.33
     END_VERSIONS
     """
 }
