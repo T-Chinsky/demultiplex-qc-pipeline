@@ -90,7 +90,7 @@ nextflow run main.nf \
   --outdir results
 ```
 
-**Example `custom.config`** (included in repository for UMass cluster):
+**Template `custom.config`** (included in repository):
 ```groovy
 executor {
     name = "slurm"
@@ -98,15 +98,18 @@ executor {
 }
 
 process {
-    clusterOptions = '--clusters faculty --partition gbc --qos gbc --account gbcstaff'
+    // Modify these SLURM options to match your cluster
+    clusterOptions = '--partition <partition> --account <account> --qos <qos>'
+    maxRetries = 10
 }
 
 singularity {
-    cacheDir = '/path/to/singularity/cache'
+    // Uncomment and set your cluster's cache directory
+    // cacheDir = '/path/to/singularity/cache'
 }
 ```
 
-Modify the paths and SLURM options to match your cluster's configuration.
+Copy and modify `custom.config` to match your cluster's configuration (partition names, account, paths, etc.).
 
 ## FastQ Screen Setup (Optional)
 
@@ -245,7 +248,7 @@ For HPC clusters or custom execution environments, use the `-c` option to specif
 nextflow run main.nf -c custom.config --input runs.csv
 ```
 
-The repository includes `custom.config` with example SLURM settings for the UMass HPC cluster. Modify this file to match your cluster's requirements (partition names, account, paths, etc.).
+The repository includes `custom.config` as a template for SLURM HPC clusters. Copy and modify this file to match your cluster's requirements (partition names, account, paths, etc.).
 
 ## Container Images
 
