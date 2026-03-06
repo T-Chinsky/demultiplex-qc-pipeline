@@ -1,13 +1,14 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT NF-CORE MODULES
+    IMPORT LOCAL MODULES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BCLCONVERT                 } from '../../modules/nf-core/bclconvert/main'
-include { FASTQC                     } from '../../modules/nf-core/fastqc/main'
-include { FASTQSCREEN_FASTQSCREEN    } from '../../modules/nf-core/fastqscreen/fastqscreen/main'
-include { MULTIQC                    } from '../../modules/nf-core/multiqc/main'
+include { BCLCONVERT                 } from '../../modules/local/bclconvert'
+include { BCL2FASTQ                  } from '../../modules/nf-core/bcl2fastq/main'
+include { FASTQC                     } from '../../modules/local/fastqc'
+include { FASTQ_SCREEN               } from '../../modules/local/fastq_screen'
+include { MULTIQC                    } from '../../modules/local/multiqc'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,15 +26,70 @@ workflow BCL_QC_SINGLE_RUN {
     ch_versions = channel.empty()
 
     //
-    // MODULE: BCL Convert - Demultiplex BCL files to FASTQ
+    // Detect samplesheet version and select appropriate demultiplexing tool
     //
-    BCLCONVERT(ch_input)
-    ch_versions = ch_versions.mix(BCLCONVERT.out.versions_bclconvert)
+    def ch_input_with_tool = ch_input
+        .map { meta, samplesheet, run_dir ->
+            // Detect samplesheet version using the detection script
+            def version_detect = """
+            ${projectDir}/bin/detect_samplesheet_version.py ${samplesheet}
+            """.execute()
+            version_detect.waitFor()
+            def version = version_detect.text.trim()
+            
+            // Determine demux tool based on version or user override
+            def demux_tool = params.demux_tool ?: (version == 'v1' ? 'bcl2fastq' : 'bclconvert')
+            
+            // Add tool info to meta
+            def meta_with_tool = meta + [demux_tool: demux_tool, samplesheet_version: version]
+            
+            tuple(meta_with_tool, samplesheet, run_dir)
+        }
+
+    //
+    // Split input based on demux tool
+    //
+    def ch_bclconvert_input = ch_input_with_tool
+        .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bclconvert' }
+    
+    def ch_bcl2fastq_input = ch_input_with_tool
+        .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bcl2fastq' }
+
+    //
+    // MODULE: BCL Convert - Demultiplex BCL files to FASTQ (v2 samplesheets)
+    //
+    def ch_demux_fastq = channel.empty()
+    def ch_demux_reports = channel.empty()
+    
+    if (!ch_bclconvert_input.isEmpty()) {
+        BCLCONVERT(ch_bclconvert_input)
+        ch_versions = ch_versions.mix(BCLCONVERT.out.versions)
+        ch_demux_fastq = ch_demux_fastq.mix(BCLCONVERT.out.fastq)
+        ch_demux_reports = ch_demux_reports.mix(BCLCONVERT.out.reports)
+    }
+
+    //
+    // MODULE: BCL2FASTQ - Demultiplex BCL files to FASTQ (v1 samplesheets)
+    //
+    if (!ch_bcl2fastq_input.isEmpty()) {
+        // BCL2FASTQ requires two separate inputs: tuple(meta, run_dir) and path(samplesheet)
+        def ch_bcl2fastq_meta_run = ch_bcl2fastq_input.map { meta, _samplesheet, run_dir -> 
+            tuple(meta, run_dir)
+        }
+        def ch_bcl2fastq_samplesheet = ch_bcl2fastq_input.map { _meta, samplesheet, _run_dir -> 
+            samplesheet
+        }
+        
+        BCL2FASTQ(ch_bcl2fastq_meta_run, ch_bcl2fastq_samplesheet)
+        ch_versions = ch_versions.mix(BCL2FASTQ.out.versions)
+        ch_demux_fastq = ch_demux_fastq.mix(BCL2FASTQ.out.fastq)
+        ch_demux_reports = ch_demux_reports.mix(BCL2FASTQ.out.reports)
+    }
 
     //
     // Flatten the fastq channel for per-file QC
     //
-    def ch_fastq_flat = BCLCONVERT.out.fastq
+    def ch_fastq_flat = ch_demux_fastq
         .transpose()  // Converts [meta, [file1, file2]] to multiple [meta, file1], [meta, file2]
 
     //
@@ -42,7 +98,7 @@ workflow BCL_QC_SINGLE_RUN {
     def ch_fastqc_zip = channel.empty()
     if (!params.skip_fastqc) {
         FASTQC(ch_fastq_flat)
-        ch_versions = ch_versions.mix(FASTQC.out.versions_fastqc.first())
+        ch_versions = ch_versions.mix(FASTQC.out.versions.first())
         ch_fastqc_zip = FASTQC.out.zip.map { _meta, zip -> zip }
     }
 
@@ -51,9 +107,9 @@ workflow BCL_QC_SINGLE_RUN {
     //
     def ch_fastq_screen_txt = channel.empty()
     if (!params.skip_fastq_screen) {
-        FASTQSCREEN_FASTQSCREEN(ch_fastq_flat, ch_fastq_screen_config)
-        ch_versions = ch_versions.mix(FASTQSCREEN_FASTQSCREEN.out.versions_fastqscreen.first())
-        ch_fastq_screen_txt = FASTQSCREEN_FASTQSCREEN.out.txt.map { _meta, txt -> txt }
+        FASTQ_SCREEN(ch_fastq_flat, ch_fastq_screen_config)
+        ch_versions = ch_versions.mix(FASTQ_SCREEN.out.versions.first())
+        ch_fastq_screen_txt = FASTQ_SCREEN.out.txt.map { _meta, txt -> txt }
     }
 
     //
@@ -62,7 +118,7 @@ workflow BCL_QC_SINGLE_RUN {
     // Collect all QC files
     def ch_multiqc_files = ch_fastqc_zip
         .mix(ch_fastq_screen_txt)
-        .mix(BCLCONVERT.out.reports.map { _meta, reports -> reports }.flatten())
+        .mix(ch_demux_reports.map { _meta, reports -> reports }.flatten())
         .collect()
         .ifEmpty([])
     
@@ -87,8 +143,8 @@ workflow BCL_QC_SINGLE_RUN {
     ch_versions = ch_versions.mix(MULTIQC.out.versions)
 
     emit:
-    fastq    = BCLCONVERT.out.fastq         // channel: [ val(meta), [ fastq files ] ]
-    reports  = BCLCONVERT.out.reports       // channel: [ val(meta), [ report files ] ]
+    fastq    = ch_demux_fastq               // channel: [ val(meta), [ fastq files ] ]
+    reports  = ch_demux_reports             // channel: [ val(meta), [ report files ] ]
     versions = ch_versions                  // channel: [ versions.yml ]
     multiqc  = MULTIQC.out.report           // channel: [ val(meta), multiqc_report.html ]
 }

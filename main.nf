@@ -76,6 +76,7 @@ def helpMessage() {
     Optional arguments:
         --outdir                      Output directory for results (default: './results')
         --fastq_screen_config         Path to FastQ Screen configuration file (optional)
+        --demux_tool                  Force specific demux tool: 'bcl2fastq' or 'bclconvert' (default: auto-detect from samplesheet)
         
     Resource options:
         --max_cpus                    Maximum number of CPUs (default: ${params.max_cpus})
