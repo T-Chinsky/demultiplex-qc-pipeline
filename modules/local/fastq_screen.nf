@@ -1,7 +1,7 @@
 process FASTQ_SCREEN {
     tag "${meta.id}"
     label 'process_medium'
-    container 'community.wave.seqera.io/library/fastq-screen:0.15.3--0c2cb9f7a8655747'
+    container 'community.wave.seqera.io/library/fastq-screen:0.16.0--3b0a59ab6ab18664'
 
     input:
     tuple val(meta), path(reads)
@@ -37,7 +37,7 @@ process FASTQ_SCREEN {
     touch ${meta.id}_screen.png
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        fastq_screen: 0.15.3
+        fastq_screen: 0.16.0
     END_VERSIONS
     """
 }

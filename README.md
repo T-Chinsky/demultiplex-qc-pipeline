@@ -255,8 +255,8 @@ The repository includes `custom.config` as a template for SLURM HPC clusters. Co
 All tools use pre-built Wave containers:
 - BCL Convert: 4.2.7
 - FastQC: 0.12.1
-- fastq_screen: 0.15.3
-- MultiQC: 1.25.2
+- fastq_screen: 0.16.0
+- MultiQC: 1.33
 
 ## License
 
