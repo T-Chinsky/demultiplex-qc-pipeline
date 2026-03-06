@@ -79,14 +79,6 @@ nextflow run main.nf \
   --fastq_screen_config /path/to/fastq_screen.conf
 ```
 
-### On SLURM Cluster
-
-```bash
-nextflow run main.nf \
-  -profile slurm \
-  --input runs.csv
-```
-
 ## FastQ Screen Setup (Optional)
 
 For contamination screening, you'll need to download and build reference genome databases. See the comprehensive guide:
@@ -215,7 +207,6 @@ results/
 - `standard`: Local execution (default)
 - `docker`: Docker containers
 - `singularity`: Singularity containers
-- `slurm`: SLURM scheduler (pre-configured for UMass cluster)
 
 ## Container Images
 
