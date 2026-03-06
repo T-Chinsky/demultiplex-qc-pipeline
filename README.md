@@ -1,6 +1,6 @@
-# BCL Convert + QC Pipeline
+# Demultiplex QC Pipeline
 
-A Nextflow DSL2 pipeline for batch processing multiple Illumina BCL conversion runs with comprehensive quality control. Supports both **BCL Convert** (v2 samplesheets) and **bcl2fastq2** (v1 samplesheets) with automatic format detection.
+A Nextflow DSL2 pipeline for batch processing multiple Illumina sequencing runs with comprehensive quality control. Supports both **BCL Convert** (v2 samplesheets) and **bcl2fastq2** (v1 samplesheets) with automatic format detection.
 
 ## Features
 
