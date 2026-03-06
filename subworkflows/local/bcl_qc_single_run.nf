@@ -4,6 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { DETECT_SAMPLESHEET_VERSION } from '../../modules/local/samplesheet_detection'
 include { BCLCONVERT                 } from '../../modules/local/bclconvert'
 include { BCL2FASTQ                  } from '../../modules/nf-core/bcl2fastq/main'
 include { FASTQC                     } from '../../modules/local/fastqc'
@@ -26,22 +27,40 @@ workflow BCL_QC_SINGLE_RUN {
     ch_versions = channel.empty()
 
     //
-    // Detect samplesheet version and select appropriate demultiplexing tool
+    // MODULE: Detect samplesheet version
     //
-    def ch_input_with_tool = ch_input
+    def ch_samplesheet_for_detection = ch_input
+        .map { meta, samplesheet, _run_dir ->
+            tuple(meta.id, samplesheet)
+        }
+    
+    def detection_script = file("${projectDir}/bin/detect_samplesheet_version.py", checkIfExists: true)
+    
+    DETECT_SAMPLESHEET_VERSION(
+        ch_samplesheet_for_detection,
+        detection_script
+    )
+    
+    //
+    // Combine detected version back with original input and determine demux tool
+    //
+    def ch_input_with_version = ch_input
         .map { meta, samplesheet, run_dir ->
-            // Detect samplesheet version using the detection script
-            def version_detect = """
-            ${projectDir}/bin/detect_samplesheet_version.py ${samplesheet}
-            """.execute()
-            version_detect.waitFor()
-            def version = version_detect.text.trim()
-            
+            tuple(meta.id, meta, samplesheet, run_dir)
+        }
+        .join(DETECT_SAMPLESHEET_VERSION.out.version)
+        .map { _id, meta, samplesheet, run_dir, version ->
             // Determine demux tool based on version or user override
             def demux_tool = params.demux_tool ?: (version == 'v1' ? 'bcl2fastq' : 'bclconvert')
             
             // Add tool info to meta
-            def meta_with_tool = meta + [demux_tool: demux_tool, samplesheet_version: version]
+            def meta_with_tool = meta + [
+                demux_tool: demux_tool,
+                samplesheet_version: version
+            ]
+            
+            // Log the detection result
+            log.info "[${meta.id}] Detected samplesheet version: ${version} -> Using ${demux_tool}"
             
             tuple(meta_with_tool, samplesheet, run_dir)
         }
@@ -49,10 +68,10 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // Split input based on demux tool
     //
-    def ch_bclconvert_input = ch_input_with_tool
+    def ch_bclconvert_input = ch_input_with_version
         .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bclconvert' }
     
-    def ch_bcl2fastq_input = ch_input_with_tool
+    def ch_bcl2fastq_input = ch_input_with_version
         .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bcl2fastq' }
 
     //
