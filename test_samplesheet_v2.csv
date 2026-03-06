@@ -7,6 +7,6 @@ BarcodeMismatchesIndex1,1
 BarcodeMismatchesIndex2,1
 
 [BCLConvert_Data]
-Sample_ID,Index,Index2,Lane
-Sample1,TAAGGCGA,TAGATCGC,1
-Sample2,CGTACTAG,CTCTCTAT,1
+Lane,Sample_ID,Index,Index2,Sample_Project
+1,Sample1,TAAGGCGA,TAGATCGC,Project_1
+1,Sample2,CGTACTAG,CTCTCTAT,Project_2
