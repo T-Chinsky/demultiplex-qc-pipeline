@@ -524,6 +524,95 @@ All tools use pre-built containers for reproducibility:
 
 All Wave containers are automatically pulled and cached on first use.
 
+## Testing
+
+This pipeline includes comprehensive automated tests using [nf-test](https://www.nf-test.com/), following nf-core best practices.
+
+### Quick Testing
+
+Run the pipeline with minimal test data to verify your setup:
+
+```bash
+# Quick test with Docker (recommended)
+nextflow run . -profile test,docker
+
+# Quick test with Singularity
+nextflow run . -profile test,singularity
+
+# Full test suite with all QC modules
+nextflow run . -profile test_full,docker
+```
+
+### Test Infrastructure
+
+The pipeline includes **23 automated test cases** covering:
+
+- ✅ Both demultiplexers (BCLConvert v2 & bcl2fastq2 v1)
+- ✅ All QC modules (FastQC, MultiQC, FASTQ Screen)
+- ✅ Samplesheet format auto-detection
+- ✅ Custom parameter combinations
+- ✅ Edge cases and mixed formats
+- ✅ Stub mode for fast validation
+
+### Running Tests
+
+The testing framework uses [nf-test](https://www.nf-test.com/) with snapshot-based validation:
+
+```bash
+# Install nf-test (if not already installed)
+wget -qO- https://code.askimed.com/install/nf-test | bash
+sudo mv nf-test /usr/local/bin/
+
+# Run all tests
+nf-test test
+
+# Run specific test file
+nf-test test tests/default.nf.test
+
+# Run stub mode tests only (fast validation)
+nf-test test --tag stub
+
+# Update snapshots after intentional changes
+nf-test test --updateSnapshot
+```
+
+### Test Profiles
+
+#### `test` Profile
+- **Duration**: ~5 minutes
+- **Resources**: 2 CPUs, 6 GB RAM
+- **Purpose**: Quick validation for CI/CD
+- **Features**: Basic demultiplexing + MultiQC
+
+#### `test_full` Profile
+- **Duration**: ~15 minutes
+- **Resources**: 4 CPUs, 12 GB RAM
+- **Purpose**: Comprehensive feature testing
+- **Features**: All QC modules enabled (FastQC, MultiQC, FASTQ Screen)
+
+### Test Coverage
+
+| Component | Test Cases | Coverage |
+|-----------|------------|----------|
+| BCLConvert v2 | 9 tests | ✅ Complete |
+| bcl2fastq2 v1 | 9 tests | ✅ Complete |
+| FastQC | 4 tests | ✅ Complete |
+| MultiQC | 6 tests | ✅ Complete |
+| FASTQ Screen | 4 tests | ✅ Complete |
+| Format detection | 6 tests | ✅ Complete |
+| Stub mode | 5 tests | ✅ Complete |
+
+### Continuous Integration
+
+The test suite is designed for GitHub Actions CI/CD:
+
+- **Stub tests**: ~30 seconds (syntax validation)
+- **Full tests**: ~8-10 minutes (complete execution)
+- **Total CI time**: <11 minutes
+- **Resource usage**: Compatible with standard GitHub Actions runners
+
+For detailed testing documentation, see [tests/README.md](tests/README.md).
+
 ## Development & Best Practices
 
 ### nf-core Standardization
@@ -541,6 +630,7 @@ This pipeline follows nf-core best practices and is fully compatible with Nextfl
 - ✅ **Container Integration**: Wave containers for all tools with automatic caching
 - ✅ **Error Handling**: Proper validation and informative error messages
 - ✅ **Resource Management**: Flexible resource allocation with configurable max limits
+- ✅ **Automated Testing**: Comprehensive nf-test suite with 23 test cases
 
 **Testing with Strict Syntax:**
 
@@ -551,6 +641,9 @@ nextflow run main.nf --input runs.csv
 
 # Test workflow structure without executing
 nextflow run main.nf --input runs.csv -stub
+
+# Run automated test suite
+nf-test test
 ```
 
 **Validation Results:**
@@ -572,6 +665,7 @@ All 11 pipeline files pass strict syntax validation with zero errors:
 - Utils class in `lib/Utils.groovy` for shared utility functions
 - Always include `versions.yml` output in modules
 - Provide stub sections for dry-run testing
+- Add nf-test cases for new features
 
 **Adding New Modules:**
 
@@ -579,16 +673,19 @@ All 11 pipeline files pass strict syntax validation with zero errors:
 2. Follow tuple input structure: `tuple val(meta), path(files)`
 3. Include multiple output channels (main output, versions, logs)
 4. Add Wave container directive
-5. Implement stub section
+5. Implement stub section for testing
 6. Update module config in `conf/modules.config`
+7. Add test case in `tests/` directory
 
 **Testing Checklist:**
 
 - [ ] Run with `NXF_SYNTAX_PARSER=v2`
 - [ ] Test with `-stub` flag
-- [ ] Verify with small test dataset
+- [ ] Add nf-test case for new feature
+- [ ] Verify with `-profile test`
+- [ ] Test with `-profile test_full`
 - [ ] Check resource limits with max_cpus/memory/time
-- [ ] Test conditional execution paths
+- [ ] Update snapshots if outputs change
 - [ ] Validate MultiQC aggregation
 
 ## Contributions and Support
