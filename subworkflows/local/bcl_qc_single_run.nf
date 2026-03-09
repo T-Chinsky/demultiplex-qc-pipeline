@@ -29,9 +29,9 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // MODULE: Detect samplesheet version
     //
-    def ch_samplesheet_for_detection = ch_input
+    ch_samplesheet_for_detection = ch_input
         .map { meta, samplesheet, _run_dir ->
-            tuple(meta.id, samplesheet)
+            [meta.id, samplesheet]
         }
     
     def detection_script = file("${projectDir}/bin/detect_samplesheet_version.py", checkIfExists: true)
@@ -44,9 +44,9 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // Combine detected version back with original input and determine demux tool
     //
-    def ch_input_with_version = ch_input
+    ch_input_with_version = ch_input
         .map { meta, samplesheet, run_dir ->
-            tuple(meta.id, meta, samplesheet, run_dir)
+            [meta.id, meta, samplesheet, run_dir]
         }
         .join(DETECT_SAMPLESHEET_VERSION.out.version)
         .map { _id, meta, samplesheet, run_dir, version ->
@@ -62,23 +62,23 @@ workflow BCL_QC_SINGLE_RUN {
             // Log the detection result
             log.info "[${meta.id}] Detected samplesheet version: ${version} -> Using ${demux_tool}"
             
-            tuple(meta_with_tool, samplesheet, run_dir)
+            [meta_with_tool, samplesheet, run_dir]
         }
 
     //
     // Split input based on demux tool
     //
-    def ch_bclconvert_input = ch_input_with_version
+    ch_bclconvert_input = ch_input_with_version
         .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bclconvert' }
     
-    def ch_bcl2fastq_input = ch_input_with_version
+    ch_bcl2fastq_input = ch_input_with_version
         .filter { meta, _samplesheet, _run_dir -> meta.demux_tool == 'bcl2fastq' }
 
     //
     // MODULE: BCL Convert - Demultiplex BCL files to FASTQ (v2 samplesheets)
     //
-    def ch_demux_fastq = channel.empty()
-    def ch_demux_reports = channel.empty()
+    ch_demux_fastq = channel.empty()
+    ch_demux_reports = channel.empty()
     
     if (!ch_bclconvert_input.isEmpty()) {
         BCLCONVERT(ch_bclconvert_input)
@@ -92,10 +92,10 @@ workflow BCL_QC_SINGLE_RUN {
     //
     if (!ch_bcl2fastq_input.isEmpty()) {
         // BCL2FASTQ requires two separate inputs: tuple(meta, run_dir) and path(samplesheet)
-        def ch_bcl2fastq_meta_run = ch_bcl2fastq_input.map { meta, _samplesheet, run_dir -> 
-            tuple(meta, run_dir)
+        ch_bcl2fastq_meta_run = ch_bcl2fastq_input.map { meta, _samplesheet, run_dir -> 
+            [meta, run_dir]
         }
-        def ch_bcl2fastq_samplesheet = ch_bcl2fastq_input.map { _meta, samplesheet, _run_dir -> 
+        ch_bcl2fastq_samplesheet = ch_bcl2fastq_input.map { _meta, samplesheet, _run_dir -> 
             samplesheet
         }
         
@@ -108,13 +108,13 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // Flatten the fastq channel for per-file QC
     //
-    def ch_fastq_flat = ch_demux_fastq
+    ch_fastq_flat = ch_demux_fastq
         .transpose()  // Converts [meta, [file1, file2]] to multiple [meta, file1], [meta, file2]
 
     //
     // MODULE: FastQC - Quality control of FASTQ files
     //
-    def ch_fastqc_zip = channel.empty()
+    ch_fastqc_zip = channel.empty()
     if (!params.skip_fastqc) {
         FASTQC(ch_fastq_flat)
         ch_versions = ch_versions.mix(FASTQC.out.versions.first())
@@ -124,7 +124,7 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // MODULE: fastq_screen - Contamination screening
     //
-    def ch_fastq_screen_txt = channel.empty()
+    ch_fastq_screen_txt = channel.empty()
     if (!params.skip_fastq_screen) {
         FASTQ_SCREEN(ch_fastq_flat, ch_fastq_screen_config)
         ch_versions = ch_versions.mix(FASTQ_SCREEN.out.versions.first())
@@ -135,7 +135,7 @@ workflow BCL_QC_SINGLE_RUN {
     // MODULE: MultiQC - Aggregate QC reports
     //
     // Collect all QC files
-    def ch_multiqc_files = ch_fastqc_zip
+    ch_multiqc_files = ch_fastqc_zip
         .mix(ch_fastq_screen_txt)
         .mix(ch_demux_reports.map { _meta, reports -> reports }.flatten())
         .collect()
@@ -143,19 +143,19 @@ workflow BCL_QC_SINGLE_RUN {
     
     // Create MultiQC input with meta - nf-core module expects:
     // tuple val(meta), path(multiqc_files), path(multiqc_config), path(multiqc_logo), path(replace_names), path(sample_names)
-    def ch_multiqc_input = ch_input
+    ch_multiqc_input = ch_input
         .first()
-        .map { meta, _samplesheet, _run_dir -> tuple(meta) }
+        .map { meta, _samplesheet, _run_dir -> [meta] }
         .combine(ch_multiqc_files)
         .map { meta, files ->
-            tuple(
+            [
                 meta,
                 files,
                 [],  // multiqc_config
                 [],  // multiqc_logo
                 [],  // replace_names
                 []   // sample_names
-            )
+            ]
         }
     
     MULTIQC(ch_multiqc_input)

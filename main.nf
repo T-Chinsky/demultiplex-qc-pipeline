@@ -203,7 +203,7 @@ workflow {
     //
     def input_csv = file(params.input, checkIfExists: true)
     
-    def ch_input = channel
+    ch_input = channel
         .fromPath(input_csv)
         .splitCsv(header: true)
         .map { row ->
@@ -215,13 +215,13 @@ workflow {
             def samplesheet = file(row.samplesheet, checkIfExists: true)
             def run_dir = file(row.run_dir, checkIfExists: true)
             
-            tuple(meta, samplesheet, run_dir)
+            [meta, samplesheet, run_dir]
         }
 
     //
     // Prepare FastQ Screen config channel
     //
-    def ch_fastq_screen_config = params.fastq_screen_config 
+    ch_fastq_screen_config = params.fastq_screen_config 
         ? channel.fromPath(params.fastq_screen_config, checkIfExists: true)
         : channel.empty()
 
