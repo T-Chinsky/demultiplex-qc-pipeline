@@ -631,7 +631,7 @@ If you're still stuck:
 2. **Search issues**: Check GitHub issues for similar problems
 3. **Nextflow community**: https://nextflow.io/slack-invite.html
 4. **nf-core help**: https://nf-co.re/join
-5. **Read docs**: See README.md and QUICK_START.md
+5. **Read docs**: See README.md for complete documentation
 
 ---
 
