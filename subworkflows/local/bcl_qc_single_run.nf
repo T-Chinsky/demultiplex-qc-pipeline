@@ -77,33 +77,33 @@ workflow BCL_QC_SINGLE_RUN {
     //
     // MODULE: BCL Convert - Demultiplex BCL files to FASTQ (v2 samplesheets)
     //
-    ch_demux_fastq = channel.empty()
-    ch_demux_reports = channel.empty()
+    BCLCONVERT(ch_bclconvert_input)
+    ch_versions = ch_versions.mix(BCLCONVERT.out.versions)
     
-    if (!ch_bclconvert_input.isEmpty()) {
-        BCLCONVERT(ch_bclconvert_input)
-        ch_versions = ch_versions.mix(BCLCONVERT.out.versions)
-        ch_demux_fastq = ch_demux_fastq.mix(BCLCONVERT.out.fastq)
-        ch_demux_reports = ch_demux_reports.mix(BCLCONVERT.out.reports)
-    }
-
     //
     // MODULE: BCL2FASTQ - Demultiplex BCL files to FASTQ (v1 samplesheets)
+    // BCL2FASTQ requires two separate inputs: tuple(meta, run_dir) and path(samplesheet)
     //
-    if (!ch_bcl2fastq_input.isEmpty()) {
-        // BCL2FASTQ requires two separate inputs: tuple(meta, run_dir) and path(samplesheet)
-        ch_bcl2fastq_meta_run = ch_bcl2fastq_input.map { meta, _samplesheet, run_dir -> 
-            [meta, run_dir]
-        }
-        ch_bcl2fastq_samplesheet = ch_bcl2fastq_input.map { _meta, samplesheet, _run_dir -> 
-            samplesheet
-        }
-        
-        BCL2FASTQ(ch_bcl2fastq_meta_run, ch_bcl2fastq_samplesheet)
-        ch_versions = ch_versions.mix(BCL2FASTQ.out.versions)
-        ch_demux_fastq = ch_demux_fastq.mix(BCL2FASTQ.out.fastq)
-        ch_demux_reports = ch_demux_reports.mix(BCL2FASTQ.out.reports)
+    ch_bcl2fastq_meta_run = ch_bcl2fastq_input.map { meta, _samplesheet, run_dir -> 
+        [meta, run_dir]
     }
+    ch_bcl2fastq_samplesheet = ch_bcl2fastq_input.map { _meta, samplesheet, _run_dir -> 
+        samplesheet
+    }
+    
+    BCL2FASTQ(ch_bcl2fastq_meta_run, ch_bcl2fastq_samplesheet)
+    ch_versions = ch_versions.mix(BCL2FASTQ.out.versions)
+    
+    //
+    // Combine outputs from both demultiplexers
+    //
+    ch_demux_fastq = channel.empty()
+        .mix(BCLCONVERT.out.fastq)
+        .mix(BCL2FASTQ.out.fastq)
+    
+    ch_demux_reports = channel.empty()
+        .mix(BCLCONVERT.out.reports)
+        .mix(BCL2FASTQ.out.reports)
 
     //
     // Flatten the fastq channel for per-file QC
