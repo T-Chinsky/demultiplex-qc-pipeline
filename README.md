@@ -131,7 +131,7 @@ nextflow run main.nf \
 
 ### With Contamination Screening
 
-First, set up fastq_screen databases following the [FASTQ_SCREEN_SETUP.md](FASTQ_SCREEN_SETUP.md) guide.
+First, set up fastq_screen databases (see the "FastQ Screen Setup" section below for detailed instructions).
 
 ```bash
 nextflow run main.nf \
@@ -142,16 +142,9 @@ nextflow run main.nf \
 
 ### On HPC Cluster with SLURM
 
-Use a custom configuration file to specify cluster-specific settings:
+Create a custom configuration file to specify cluster-specific settings:
 
-```bash
-nextflow run main.nf \
-  -c custom.config \
-  --input runs.csv \
-  --outdir results
-```
-
-**Template `custom.config`** (included in repository):
+**Example custom.config:**
 ```groovy
 executor {
     name = "slurm"
@@ -165,12 +158,21 @@ process {
 }
 
 singularity {
-    // Uncomment and set your cluster's cache directory
-    // cacheDir = '/path/to/singularity/cache'
+    // Set your cluster's cache directory
+    cacheDir = '/path/to/singularity/cache'
 }
 ```
 
-Copy and modify `custom.config` to match your cluster's configuration (partition names, account, paths, etc.).
+Then run with:
+
+```bash
+nextflow run main.nf \
+  -c custom.config \
+  --input runs.csv \
+  --outdir results
+```
+
+Modify the configuration to match your cluster's requirements (partition names, account, paths, etc.).
 
 ## FastQ Screen Setup (Optional)
 
@@ -378,7 +380,10 @@ results/
     └── ... (title: "RNA-Seq Control Samples")
 ```
 
-See `example_input.csv` in the repository for a complete working example.
+**Tips:**
+- Always use absolute paths for portability
+- Use descriptive `run_id` values that help identify runs later
+- The `multiqc_title` field helps differentiate reports when viewing multiple results
 
 ### Samplesheet Formats
 
@@ -435,7 +440,7 @@ Sample1,TestSample1,TAAGGCGA,TAGATCGC
 | **Required Columns** | Lane, Sample_ID, Index1/Index2 | Lane, Sample_ID, Index1/Index2 |
 | **Optional Columns** | Sample_Name, Sample_Project | Sample_Name, Sample_Project |
 
-See `test_samplesheet_v1.csv` and `test_samplesheet_v2.csv` for complete examples.
+**Note:** Both formats are automatically detected by the pipeline - no manual specification required unless you want to force a specific demultiplexer with `--demux_tool`.
 
 ## Pipeline Output
 
@@ -501,13 +506,13 @@ For more details about interpreting the output files and quality metrics, refer 
 
 ### Custom Configurations
 
-For HPC clusters or custom execution environments, use the `-c` option to specify a custom configuration file:
+For HPC clusters or custom execution environments, create a custom configuration file with the `-c` option:
 
 ```bash
 nextflow run main.nf -c custom.config --input runs.csv
 ```
 
-The repository includes `custom.config` as a template for SLURM HPC clusters. Copy and modify this file to match your cluster's requirements (partition names, account, paths, etc.).
+Create your own `custom.config` file for SLURM HPC clusters following the example shown in the "On HPC Cluster with SLURM" section above. Modify it to match your cluster's requirements (partition names, account, paths, etc.).
 
 ## Container Images
 

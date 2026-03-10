@@ -11,7 +11,7 @@
 
 ### **Understanding the Pipeline**
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Design, data flow, and structure
-- **[docs/output.md](docs/output.md)** - Output files and formats
+- **[README.md § Pipeline Output](README.md#pipeline-output)** - Output files and formats
 
 ### **Testing**
 - **[tests/README.md](tests/README.md)** - Testing guide and infrastructure
@@ -42,7 +42,7 @@
 | **Run tests** | [tests/README.md § Quick Start](tests/README.md#-quick-start) |
 | **Understand workflow** | [ARCHITECTURE.md § Data Flow](ARCHITECTURE.md#-detailed-data-flow) |
 | **Add a new module** | [ARCHITECTURE.md § Extension Points](ARCHITECTURE.md#-extension-points) |
-| **Check outputs** | [docs/output.md](docs/output.md) |
+| **Check outputs** | [README.md § Pipeline Output](README.md#pipeline-output) |
 
 ---
 

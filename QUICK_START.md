@@ -227,8 +227,8 @@ nextflow run main.nf \
 
 - **Full Documentation**: See `README.md`
 - **Testing Guide**: See `tests/README.md`
-- **Output Details**: See `docs/output.md`
-- **Complete Conversion Notes**: See `PIPELINE_CONVERSION_COMPLETE.md`
+- **Output Details**: See [README.md § Pipeline Output](README.md#pipeline-output)
+- **Architecture**: See `ARCHITECTURE.md`
 
 ## ⚡ Pro Tips
 
