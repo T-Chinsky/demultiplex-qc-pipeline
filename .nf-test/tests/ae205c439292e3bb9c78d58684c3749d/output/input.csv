@@ -1,0 +1,2 @@
+run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_001,/home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv,/home/user/demultiplex-qc-pipeline/tests/data/v2/runs/TEST_RUN_001,TEST_RUN_001 BCLConvert QC Report

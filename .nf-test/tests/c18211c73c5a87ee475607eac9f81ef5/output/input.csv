@@ -1,0 +1,2 @@
+run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_V1,/home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv,/home/user/demultiplex-qc-pipeline/tests/data/v1/runs/TEST_RUN_V1,TEST_RUN_V1 bcl2fastq QC Report

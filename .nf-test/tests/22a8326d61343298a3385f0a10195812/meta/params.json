@@ -1,0 +1,1 @@
+{"skip_fastq_screen":true,"input":"/home/user/demultiplex-qc-pipeline/tests/data/v1/input.csv","max_time":"6.h","max_cpus":2,"max_memory":"6.GB","outdir":"/home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/output","demultiplexer":"bcl2fastq"}

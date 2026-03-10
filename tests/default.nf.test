@@ -1,0 +1,180 @@
+nextflow_pipeline {
+    name "Test default pipeline execution"
+    script "../main.nf"
+    tag "default"
+    tag "pipeline"
+
+    test("Default parameters - BCLConvert v2") {
+        
+        setup {
+            // Create input CSV with resolved paths
+            def inputCsv = """run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_001,${projectDir}/tests/data/v2/samplesheet.csv,${projectDir}/tests/data/v2/runs/TEST_RUN_001,TEST_RUN_001 BCLConvert QC Report
+"""
+            def inputFile = file("$outputDir/input.csv")
+            inputFile.text = inputCsv
+        }
+        
+        when {
+            params {
+                outdir     = "$outputDir"
+                input      = "$outputDir/input.csv"
+                
+                // Resource limits for testing
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+                
+                // Skip time-consuming modules
+                skip_fastq_screen = true
+            }
+        }
+
+        then {
+            // Pipeline should complete successfully
+            assert workflow.success
+            
+            // Should execute expected number of tasks
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Get stable outputs (excluding dynamic files)
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            // Snapshot test for reproducibility
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name,
+                path("${params.outdir}/fastq/").list()
+            ).match()
+        }
+    }
+
+    test("Default parameters - BCLConvert v2 - stub") {
+        
+        options "-stub"
+        tag "stub"
+        
+        setup {
+            // Create input CSV with resolved paths
+            def inputCsv = """run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_001,${projectDir}/tests/data/v2/samplesheet.csv,${projectDir}/tests/data/v2/runs/TEST_RUN_001,TEST_RUN_001 BCLConvert QC Report
+"""
+            def inputFile = file("$outputDir/input.csv")
+            inputFile.text = inputCsv
+        }
+        
+        when {
+            params {
+                outdir     = "$outputDir"
+                input      = "$outputDir/input.csv"
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+                
+                skip_fastq_screen = true
+            }
+        }
+
+        then {
+            // Stub mode should complete successfully
+            assert workflow.success
+            
+            // Should execute tasks in stub mode
+            assert workflow.trace.succeeded().size() > 0
+        }
+    }
+
+    test("Default parameters - bcl2fastq2 v1") {
+        
+        setup {
+            // Create input CSV with resolved paths
+            def inputCsv = """run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_V1,${projectDir}/tests/data/v1/samplesheet.csv,${projectDir}/tests/data/v1/runs/TEST_RUN_V1,TEST_RUN_V1 bcl2fastq QC Report
+"""
+            def inputFile = file("$outputDir/input.csv")
+            inputFile.text = inputCsv
+        }
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "$outputDir/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                // Resource limits
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+                
+                // Skip time-consuming modules
+                skip_fastq_screen = true
+            }
+        }
+
+        then {
+            // Pipeline should complete successfully
+            assert workflow.success
+            
+            // Should execute expected number of tasks
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Get stable outputs
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            // Snapshot test
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name,
+                path("${params.outdir}/fastq/").list()
+            ).match()
+        }
+    }
+
+    test("Default parameters - bcl2fastq2 v1 - stub") {
+        
+        options "-stub"
+        tag "stub"
+        
+        setup {
+            // Create input CSV with resolved paths
+            def inputCsv = """run_id,samplesheet,run_dir,multiqc_title
+TEST_RUN_V1,${projectDir}/tests/data/v1/samplesheet.csv,${projectDir}/tests/data/v1/runs/TEST_RUN_V1,TEST_RUN_V1 bcl2fastq QC Report
+"""
+            def inputFile = file("$outputDir/input.csv")
+            inputFile.text = inputCsv
+        }
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "$outputDir/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+                
+                skip_fastq_screen = true
+            }
+        }
+
+        then {
+            // Stub mode should complete successfully
+            assert workflow.success
+            
+            // Should execute tasks in stub mode
+            assert workflow.trace.succeeded().size() > 0
+        }
+    }
+}

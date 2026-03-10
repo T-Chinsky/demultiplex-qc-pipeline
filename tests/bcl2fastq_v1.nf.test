@@ -1,0 +1,177 @@
+nextflow_pipeline {
+    name "Test bcl2fastq2 v1 specific features"
+    script "../main.nf"
+    tag "bcl2fastq"
+    tag "v1"
+
+    test("bcl2fastq2 v1 - With FastQC and MultiQC") {
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v1/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                // Enable QC modules
+                skip_fastqc       = false
+                skip_multiqc      = false
+                skip_fastq_screen = true
+                
+                // Resource limits
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify FastQC ran
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:FASTQC'
+            }
+            
+            // Verify MultiQC ran
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:MULTIQC'
+            }
+            
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name
+            ).match()
+        }
+    }
+
+    test("bcl2fastq2 v1 - Skip FastQC") {
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v1/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                // Skip FastQC, keep MultiQC
+                skip_fastqc       = true
+                skip_multiqc      = false
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify FastQC did NOT run
+            assert !workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:FASTQC'
+            }
+            
+            // Verify MultiQC still ran
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:MULTIQC'
+            }
+        }
+    }
+
+    test("bcl2fastq2 v1 - Custom barcode mismatches") {
+        
+        when {
+            params {
+                outdir             = "$outputDir"
+                input              = "${projectDir}/tests/data/v1/samplesheet.csv"
+                demultiplexer      = 'bcl2fastq'
+                barcode_mismatches = 2
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify bcl2fastq ran with custom mismatches
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:BCL2FASTQ'
+            }
+        }
+    }
+
+    test("bcl2fastq2 v1 - Custom trimming") {
+        
+        when {
+            params {
+                outdir                 = "$outputDir"
+                input                  = "${projectDir}/tests/data/v1/samplesheet.csv"
+                demultiplexer          = 'bcl2fastq'
+                trim_adapters          = true
+                minimum_trimmed_length = 30
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify bcl2fastq ran with trimming
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:BCL2FASTQ'
+            }
+        }
+    }
+
+    test("bcl2fastq2 v1 - stub") {
+        
+        options "-stub"
+        tag "stub"
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v1/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                skip_fastqc       = false
+                skip_multiqc      = false
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+        }
+    }
+}

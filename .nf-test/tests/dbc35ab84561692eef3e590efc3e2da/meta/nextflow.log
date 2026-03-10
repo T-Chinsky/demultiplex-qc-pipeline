@@ -1,0 +1,261 @@
+Mar-10 18:36:41.966 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/nextflow.log run /home/user/demultiplex-qc-pipeline/tests/../main.nf -c /home/user/demultiplex-qc-pipeline/nextflow.config -params-file /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/params.json -ansi-log false -with-trace /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/trace.csv -w /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/work
+Mar-10 18:36:42.070 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 25.04.7
+Mar-10 18:36:42.103 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/user/.nextflow/plugins; core-plugins: nf-amazon@2.15.0-patch1,nf-azure@1.16.0-patch1,nf-cloudcache@0.4.3,nf-codecommit@0.2.3,nf-console@1.2.1,nf-google@1.21.1,nf-k8s@1.0.0,nf-tower@1.11.4-patch1,nf-wave@1.12.1
+Mar-10 18:36:42.143 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-10 18:36:42.144 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-10 18:36:42.149 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
+Mar-10 18:36:42.166 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-10 18:36:42.201 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/user/demultiplex-qc-pipeline/nextflow.config
+Mar-10 18:36:42.212 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/user/demultiplex-qc-pipeline/nextflow.config
+Mar-10 18:36:42.216 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/user/demultiplex-qc-pipeline/nextflow.config
+Mar-10 18:36:42.218 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/user/demultiplex-qc-pipeline/nextflow.config
+Mar-10 18:36:42.275 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/user/.nextflow/secrets/store.json
+Mar-10 18:36:42.281 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@47b2e9e1] - activable => nextflow.secret.LocalSecretsProvider@47b2e9e1
+Mar-10 18:36:42.316 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Mar-10 18:36:43.595 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Mar-10 18:36:43.838 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Mar-10 18:36:43.859 [main] INFO  nextflow.cli.CmdRun - Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [boring_torvalds] DSL2 - revision: 28f1bdbeb2
+Mar-10 18:36:43.861 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-10 18:36:43.861 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Mar-10 18:36:43.928 [main] DEBUG nextflow.Session - Session UUID: 642ad612-b6fc-4e6a-acea-c74107fdeaf4
+Mar-10 18:36:43.928 [main] DEBUG nextflow.Session - Run name: boring_torvalds
+Mar-10 18:36:43.929 [main] DEBUG nextflow.Session - Executor pool size: 8
+Mar-10 18:36:43.939 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-10 18:36:43.945 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Mar-10 18:36:43.971 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 25.04.7 build 5955
+  Created: 08-09-2025 13:29 UTC 
+  System: Linux 6.1.102
+  Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 21.0.8+9-Ubuntu-0ubuntu124.04.1
+  Encoding: UTF-8 (ANSI_X3.4-1968)
+  Process: 5095@e2b.local [127.0.1.1]
+  CPUs: 8 - Mem: 7.7 GB (6.8 GB) - Swap: 128 MB (128 MB)
+Mar-10 18:36:44.006 [main] DEBUG nextflow.Session - Work-dir: /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/work [ext2/ext3]
+Mar-10 18:36:44.044 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-10 18:36:44.060 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-10 18:36:44.090 [main] DEBUG nextflow.Session - Observer factory (v2): LinObserverFactory
+Mar-10 18:36:44.123 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-10 18:36:44.136 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Mar-10 18:36:44.205 [main] DEBUG nextflow.Session - Session start
+Mar-10 18:36:44.211 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/trace.csv
+Mar-10 18:36:44.220 [main] DEBUG nextflow.Session - Using default localLib path: /home/user/demultiplex-qc-pipeline/lib
+Mar-10 18:36:44.225 [main] DEBUG nextflow.Session - Adding to the classpath library: /home/user/demultiplex-qc-pipeline/lib
+Mar-10 18:36:44.613 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-10 18:36:45.447 [main] INFO  nextflow.Nextflow - 
+========================================
+nf-core/bclconvert v1.0.0
+========================================
+Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/output
+FastQ Screen config     : Not provided (skipping)
+Max CPUs                : 2
+Max memory              : 6.GB
+Max time                : 6.h
+Publish mode            : copy
+========================================
+
+Mar-10 18:36:45.678 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-10 18:36:45.679 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-10 18:36:45.687 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Mar-10 18:36:45.696 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=7.7 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Mar-10 18:36:45.699 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Mar-10 18:36:45.731 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:DETECT_SAMPLESHEET_VERSION': maxForks=0; fair=false; array=0
+Mar-10 18:36:45.808 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCLCONVERT
+Mar-10 18:36:45.810 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BCLCONVERT` matches process NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCLCONVERT
+Mar-10 18:36:45.816 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-10 18:36:45.816 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-10 18:36:45.817 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCLCONVERT': maxForks=0; fair=false; array=0
+Mar-10 18:36:45.840 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ
+Mar-10 18:36:45.841 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BCL2FASTQ` matches process NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ
+Mar-10 18:36:45.845 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-10 18:36:45.845 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-10 18:36:45.846 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ': maxForks=0; fair=false; array=0
+Mar-10 18:36:45.911 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:MULTIQC
+Mar-10 18:36:45.913 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MULTIQC` matches process NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:MULTIQC
+Mar-10 18:36:45.915 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-10 18:36:45.916 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-10 18:36:45.917 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:MULTIQC': maxForks=0; fair=false; array=0
+Mar-10 18:36:45.933 [main] DEBUG nextflow.Session - Config process names validation disabled as requested
+Mar-10 18:36:45.937 [main] DEBUG nextflow.Session - Igniting dataflow network (12)
+Mar-10 18:36:45.945 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:DETECT_SAMPLESHEET_VERSION
+Mar-10 18:36:45.946 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCLCONVERT
+Mar-10 18:36:45.946 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ
+Mar-10 18:36:45.946 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:MULTIQC
+Mar-10 18:36:45.948 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_c8a81b699485f23d: /home/user/demultiplex-qc-pipeline/modules/local/fastq_screen.nf
+  Script_e790906d76733d18: /home/user/demultiplex-qc-pipeline/modules/local/bclconvert.nf
+  Script_f4755bffac9493c1: /home/user/demultiplex-qc-pipeline/main.nf
+  Script_719f5bc1c9799bbf: /home/user/demultiplex-qc-pipeline/modules/nf-core/bcl2fastq/main.nf
+  Script_4ef69fc4c114261e: /home/user/demultiplex-qc-pipeline/modules/local/samplesheet_detection.nf
+  Script_6831d1cc4668e935: /home/user/demultiplex-qc-pipeline/subworkflows/local/bcl_qc_single_run.nf
+  Script_5151543579f72e03: /home/user/demultiplex-qc-pipeline/workflows/bclconvert.nf
+  Script_2ac19a7496e4554a: /home/user/demultiplex-qc-pipeline/modules/local/multiqc.nf
+  Script_180be8f8ba0e698a: /home/user/demultiplex-qc-pipeline/modules/local/fastqc.nf
+Mar-10 18:36:45.948 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Mar-10 18:36:45.948 [main] DEBUG nextflow.Session - Session await
+Mar-10 18:36:45.951 [Actor Thread 7] ERROR nextflow.extension.OperatorImpl - @unknown
+java.lang.IllegalArgumentException: Argument of `file` function cannot be null
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.Nextflow.file(Nextflow.groovy:121)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at Script_f4755bffac9493c1$_runScript_closure2$_closure4$_closure5.doCall(Script_f4755bffac9493c1:215)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.extension.MapOp$_apply_closure1.doCall(MapOp.groovy:56)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.onMessage(DataflowOperatorActor.java:108)
+	at groovyx.gpars.actor.impl.SDAClosure$1.call(SDAClosure.java:43)
+	at groovyx.gpars.actor.AbstractLoopingActor.runEnhancedWithoutRepliesOnMessages(AbstractLoopingActor.java:293)
+	at groovyx.gpars.actor.AbstractLoopingActor.access$400(AbstractLoopingActor.java:30)
+	at groovyx.gpars.actor.AbstractLoopingActor$1.handleMessage(AbstractLoopingActor.java:93)
+	at groovyx.gpars.util.AsyncMessagingCore.run(AsyncMessagingCore.java:132)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Mar-10 18:36:45.961 [Actor Thread 7] DEBUG nextflow.Session - Session aborted -- Cause: Argument of `file` function cannot be null
+Mar-10 18:36:45.995 [Actor Thread 7] DEBUG nextflow.Session - The following nodes are still active:
+[process] NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:DETECT_SAMPLESHEET_VERSION
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (value) bound ; channel: detection_script
+  port 2: (cntrl) -     ; channel: $
+
+[process] NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCLCONVERT
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+[process] NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (queue) OPEN  ; channel: samplesheet
+  port 2: (cntrl) -     ; channel: $
+
+[process] NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:MULTIQC
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+Mar-10 18:36:46.005 [Actor Thread 7] ERROR nextflow.script.WorkflowMetadata - Failed to invoke `workflow.onError` event handler
+java.lang.NullPointerException: Cannot get property 'errorMessage' on null object
+	at org.codehaus.groovy.runtime.NullObject.getProperty(NullObject.java:92)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at Script_f4755bffac9493c1$_runScript_closure2$_closure4$_closure7.doCall(Script_f4755bffac9493c1:266)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:422)
+	at nextflow.script.WorkflowMetadata$_invokeOnError_closure4.doCall(WorkflowMetadata.groovy:447)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:422)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2394)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2379)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2420)
+	at nextflow.script.WorkflowMetadata.invokeOnError(WorkflowMetadata.groovy:445)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+	at groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:422)
+	at nextflow.Session.notifyError(Session.groovy:1127)
+	at nextflow.Session.abort(Session.groovy:823)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.extension.DataflowHelper$1.onException(DataflowHelper.groovy:99)
+	at groovyx.gpars.dataflow.operator.DataflowProcessor.fireOnException(DataflowProcessor.java:331)
+	at groovyx.gpars.dataflow.operator.DataflowProcessor.reportError(DataflowProcessor.java:293)
+	at groovyx.gpars.dataflow.operator.DataflowProcessorActor.reportException(DataflowProcessorActor.java:125)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:122)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.onMessage(DataflowOperatorActor.java:108)
+	at groovyx.gpars.actor.impl.SDAClosure$1.call(SDAClosure.java:43)
+	at groovyx.gpars.actor.AbstractLoopingActor.runEnhancedWithoutRepliesOnMessages(AbstractLoopingActor.java:293)
+	at groovyx.gpars.actor.AbstractLoopingActor.access$400(AbstractLoopingActor.java:30)
+	at groovyx.gpars.actor.AbstractLoopingActor$1.handleMessage(AbstractLoopingActor.java:93)
+	at groovyx.gpars.util.AsyncMessagingCore.run(AsyncMessagingCore.java:132)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Mar-10 18:36:46.006 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Mar-10 18:36:46.008 [main] DEBUG nextflow.Session - Session await > all processes finished
+Mar-10 18:36:46.008 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Mar-10 18:36:46.012 [main] ERROR nextflow.script.WorkflowMetadata - Failed to invoke `workflow.onComplete` event handler
+java.lang.NullPointerException: Cannot get property 'success' on null object
+	at org.codehaus.groovy.runtime.NullObject.getProperty(NullObject.java:92)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at Script_f4755bffac9493c1$_runScript_closure2$_closure4$_closure6.doCall(Script_f4755bffac9493c1:244)
+	at Script_f4755bffac9493c1$_runScript_closure2$_closure4$_closure6.doCall(Script_f4755bffac9493c1)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:412)
+	at nextflow.script.WorkflowMetadata$_invokeOnComplete_closure3.doCall(WorkflowMetadata.groovy:426)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:280)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:422)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2394)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2379)
+	at org.codehaus.groovy.runtime.DefaultGroovyMethods.each(DefaultGroovyMethods.java:2420)
+	at nextflow.script.WorkflowMetadata.invokeOnComplete(WorkflowMetadata.groovy:424)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
+	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
+	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
+	at nextflow.script.WorkflowMetadata$_closure2.doCall(WorkflowMetadata.groovy:287)
+	at nextflow.script.WorkflowMetadata$_closure2.call(WorkflowMetadata.groovy)
+	at groovy.lang.Closure.run(Closure.java:505)
+	at nextflow.Session.shutdown0(Session.groovy:760)
+	at nextflow.Session.destroy(Session.groovy:713)
+	at nextflow.script.ScriptRunner.shutdown(ScriptRunner.groovy:263)
+	at nextflow.script.ScriptRunner.execute(ScriptRunner.groovy:147)
+	at nextflow.cli.CmdRun.run(CmdRun.groovy:379)
+	at nextflow.cli.Launcher.run(Launcher.groovy:513)
+	at nextflow.cli.Launcher.main(Launcher.groovy:673)
+Mar-10 18:36:46.018 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=0; peakCpus=0; peakMemory=0; ]
+Mar-10 18:36:46.018 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Mar-10 18:36:46.019 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Mar-10 18:36:46.865 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Mar-10 18:36:47.006 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Mar-10 18:36:47.026 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

@@ -1,0 +1,45 @@
+ERROR ~ Error executing process > 'NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ (null)'
+
+Caused by:
+  Process `NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ (null)` terminated with an error exit status (126)
+
+
+Command executed:
+
+  mkdir -p output/Reports output/Stats
+  touch output/Sample1_S1_L001_R1_001.fastq.gz
+  touch output/Sample1_S1_L001_R2_001.fastq.gz
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_BCLCONVERT:BCLCONVERT:BCL_QC_SINGLE_RUN:BCL2FASTQ":
+      bcl2fastq2: 2.20.0
+  END_VERSIONS
+
+Command exit status:
+  126
+
+Command output:
+  (empty)
+
+Command error:
+  docker: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": dial unix /var/run/docker.sock: connect: permission denied.
+  See 'docker run --help'.
+
+Work dir:
+  /home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/work/e9/ef0450d6d78f245f3babc000c968e5
+
+Container:
+  community.wave.seqera.io/library/bcl2fastq2:2.20.0--1d9942001bacdbaa
+
+Tip: view the complete command output by changing to the process work dir and entering the command `cat .command.out`
+
+ -- Check '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for details
+ERROR ~ Failed to invoke `workflow.onError` event handler
+
+ -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details
+ERROR ~ Invalid method invocation `call` with arguments: [id:TEST_RUN_V1, multiqc_title:TEST_RUN_V1 bcl2fastq QC Report] (java.util.LinkedHashMap) on _closure14 type
+
+ -- Check '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for details
+ERROR ~ Failed to invoke `workflow.onError` event handler
+
+ -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details

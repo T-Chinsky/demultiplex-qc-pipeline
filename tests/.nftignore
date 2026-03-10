@@ -1,0 +1,31 @@
+# Patterns to exclude from nf-test snapshot validation
+# These files contain variable content that should not be tested
+
+# Log files (contain timestamps and variable content)
+*.log
+
+# Process execution metadata
+*.command.*
+*.exitcode
+
+# Pipeline info files (contain timestamps)
+pipeline_info/*.html
+pipeline_info/*.json
+pipeline_info/*.txt
+pipeline_info/*.svg
+
+# Temporary work directory
+work/
+
+# Nextflow execution logs
+.nextflow.log*
+.nextflow/
+
+# Test output directories
+test_output/
+output/
+results/
+
+# Hidden files
+.*
+!.nftignore

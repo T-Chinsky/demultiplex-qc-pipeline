@@ -1,0 +1,166 @@
+nextflow_pipeline {
+    name "Test edge cases and mixed format handling"
+    script "../main.nf"
+    tag "edge_cases"
+    tag "formats"
+
+    test("Mixed v1/v2 formats - Auto-detection") {
+        
+        when {
+            params {
+                outdir     = "$outputDir"
+                input      = "${projectDir}/tests/data/v2/input.csv"
+                
+                // Let pipeline auto-detect format
+                // demultiplexer not specified
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name
+            ).match()
+        }
+    }
+
+    test("Multiple lanes - Multi-lane processing") {
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v2/samplesheet.csv"
+                demultiplexer = 'bclconvert'
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify demultiplexing handled multiple lanes
+            def fastq_dir = path("${params.outdir}/fastq/")
+            assert fastq_dir.exists()
+            
+            // Should have output from both lanes
+            def fastq_files = fastq_dir.list()
+            assert fastq_files.size() > 0
+        }
+    }
+
+    test("Project organization - v1 format with projects") {
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v1/input.csv"
+                demultiplexer = 'bcl2fastq'
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify project-based organization
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name
+            ).match()
+        }
+    }
+
+    test("Minimal samplesheet - Minimal metadata") {
+        
+        when {
+            params {
+                outdir        = "$outputDir"
+                input         = "${projectDir}/tests/data/v2/samplesheet.csv"
+                demultiplexer = 'bclconvert'
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Pipeline should handle minimal samplesheets
+            assert path("${params.outdir}/fastq/").exists()
+        }
+    }
+
+    test("Mixed formats - stub") {
+        
+        options "-stub"
+        tag "stub"
+        
+        when {
+            params {
+                outdir     = "$outputDir"
+                input      = "${projectDir}/tests/data/v2/input.csv"
+                
+                skip_fastqc       = true
+                skip_multiqc      = true
+                skip_fastq_screen = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+        }
+    }
+}

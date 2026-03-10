@@ -1,0 +1,141 @@
+nextflow_pipeline {
+    name "Test FASTQ Screen contamination screening"
+    script "../main.nf"
+    tag "fastq_screen"
+    tag "qc"
+
+    test("FASTQ Screen - Enabled with config") {
+        
+        when {
+            params {
+                outdir              = "$outputDir"
+                input               = "${projectDir}/tests/data/v2/samplesheet.csv"
+                
+                // Enable FASTQ Screen
+                skip_fastq_screen   = false
+                fastq_screen_config = "${projectDir}/tests/data/fastq_screen.conf"
+                
+                // Skip other QC for speed
+                skip_fastqc  = true
+                skip_multiqc = true
+                
+                // Resource limits
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify FASTQ Screen ran
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:FASTQ_SCREEN'
+            }
+            
+            def stable_name = getAllFilesFromDir(
+                params.outdir, 
+                relative: true, 
+                includeDir: true, 
+                ignore: ['pipeline_info/*.{html,json,txt,svg}', '*.log']
+            )
+            
+            assert snapshot(
+                workflow.trace.succeeded().size(),
+                stable_name
+            ).match()
+        }
+    }
+
+    test("FASTQ Screen - Disabled") {
+        
+        when {
+            params {
+                outdir     = "$outputDir"
+                input      = "${projectDir}/tests/data/v2/input.csv"
+                
+                // Disable FASTQ Screen
+                skip_fastq_screen = true
+                
+                skip_fastqc  = true
+                skip_multiqc = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify FASTQ Screen did NOT run
+            assert !workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:FASTQ_SCREEN'
+            }
+        }
+    }
+
+    test("FASTQ Screen - Custom aligner") {
+        
+        when {
+            params {
+                outdir              = "$outputDir"
+                input               = "${projectDir}/tests/data/v2/samplesheet.csv"
+                
+                // Enable FASTQ Screen with custom aligner
+                skip_fastq_screen   = false
+                fastq_screen_config = "${projectDir}/tests/data/fastq_screen.conf"
+                fastq_screen_aligner = 'bwa'
+                
+                skip_fastqc  = true
+                skip_multiqc = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+            
+            // Verify FASTQ Screen ran with custom aligner
+            assert workflow.trace.tasks().any { task -> 
+                task.process == 'NFCORE_DEMULTIPLEX:DEMULTIPLEX:BCL_QC_SINGLE_RUN:FASTQ_SCREEN'
+            }
+        }
+    }
+
+    test("FASTQ Screen - stub") {
+        
+        options "-stub"
+        tag "stub"
+        
+        when {
+            params {
+                outdir              = "$outputDir"
+                input               = "${projectDir}/tests/data/v2/samplesheet.csv"
+                
+                skip_fastq_screen   = false
+                fastq_screen_config = "${projectDir}/tests/data/fastq_screen.conf"
+                
+                skip_fastqc  = true
+                skip_multiqc = true
+                
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0
+        }
+    }
+}

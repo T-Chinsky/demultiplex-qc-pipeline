@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<RunParameters xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <RunParametersVersion>NovaSeq</RunParametersVersion>
+  <Setup>
+    <SupportMultipleSurfacesInUI>true</SupportMultipleSurfacesInUI>
+  </Setup>
+  <InstrumentID>NovaSeq6000</InstrumentID>
+  <RunID>TEST_RUN_V1</RunID>
+  <RunNumber>1</RunNumber>
+  <RTAVersion>v3.4.4</RTAVersion>
+  <FlowCellMode>SP</FlowCellMode>
+  <Side>A</Side>
+  <WorkflowType>NovaSeqStandard</WorkflowType>
+</RunParameters>

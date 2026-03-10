@@ -1,0 +1,1382 @@
+
+?[1m nf-test 0.9.4[0m
+https://www.nf-test.com
+(c) 2021 - 2024 Lukas Forer and Sebastian Schoenherr
+
+[33mWarning: This pipeline has no nf-test config file.[0m
+
+[1mTest bcl2fastq2 v1 specific features[0m
+
+  [1mTest[0m [921585a5] 'bcl2fastq2 v1 - With FastQC and MultiQC' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [drunk_mclean] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.613s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [drunk_mclean] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/921585a565c3b6f149e923081f36c542/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [1c542bb1] 'bcl2fastq2 v1 - Skip FastQC' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [peaceful_shaw] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.128s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [peaceful_shaw] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/1c542bb141ec6de481b9ad351d8134fa/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [ccf18a6d] 'bcl2fastq2 v1 - Custom barcode mismatches' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [compassionate_mahavira] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.107s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [compassionate_mahavira] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ccf18a6d520323f1b39d52a0632a6574/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [8c74bc8b] 'bcl2fastq2 v1 - Custom trimming' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [sleepy_kay] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.198s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [sleepy_kay] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [d6776286] 'bcl2fastq2 v1 - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [adoring_salas] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.894s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [adoring_salas] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67762863c08d575a0ce5ef6c0dbb3d1/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+
+[1mTest BCLConvert v2 specific features[0m
+
+  [1mTest[0m [2f4acffb] 'BCLConvert v2 - With FastQC and MultiQC' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [boring_rubens] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.651s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [boring_rubens] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2f4acffbfd74ea45e7f6c49201f8ddcf/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [fecf6bb4] 'BCLConvert v2 - Skip FastQC' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [gigantic_boltzmann] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.653s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [gigantic_boltzmann] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/fecf6bb49efa7f5803c8b2c30bc39cd0/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [10b4ec99] 'BCLConvert v2 - Skip MultiQC' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [stoic_shockley] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.539s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [stoic_shockley] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/10b4ec99e7559a62dbd737e187f80724/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [dbc35ab8] 'BCLConvert v2 - Custom override_cycles' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [grave_almeida] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.506s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [grave_almeida] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/dbc35ab84561692eef3e590efc3e2da/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [d67e2045] 'BCLConvert v2 - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [friendly_noyce] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/meta/nextflow.log' file for more details
+    [31mFAILED[0m (8.54s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [friendly_noyce] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/d67e204558954099508ff0f81b8d8f62/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+
+[1mTest default pipeline execution[0m
+
+  [1mTest[0m [bf58acec] 'Default parameters - BCLConvert v2' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [friendly_koch] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.754s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [friendly_koch] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/bf58acec0a8ff35143f7aefd76827ef4/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [ae205c43] 'Default parameters - BCLConvert v2 - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [admiring_planck] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.767s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [admiring_planck] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [22a8326d] 'Default parameters - bcl2fastq2 v1' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [drunk_goldberg] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.261s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [drunk_goldberg] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/22a8326d61343298a3385f0a10195812/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [c18211c7] 'Default parameters - bcl2fastq2 v1 - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [modest_liskov] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.787s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [modest_liskov] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/c18211c73c5a87ee475607eac9f81ef5/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+
+[1mTest FASTQ Screen contamination screening[0m
+
+  [1mTest[0m [3c6a8f74] 'FASTQ Screen - Enabled with config' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [nauseous_heisenberg] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/output
+    > FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.722s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [nauseous_heisenberg] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/output
+  FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/3c6a8f74a458305134240976b6821845/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [46387000] 'FASTQ Screen - Disabled' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [jovial_lagrange] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.968s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [jovial_lagrange] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/463870008b2914e497dfb9d34e9f850a/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [27938d33] 'FASTQ Screen - Custom aligner' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [clever_swanson] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/output
+    > FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.1s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [clever_swanson] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/output
+  FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/27938d33f0a82b50a941c8a6b7e2444d/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [2c55722b] 'FASTQ Screen - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [wise_franklin] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/output
+    > FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/meta/nextflow.log' file for more details
+    [31mFAILED[0m (8.046s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [wise_franklin] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/output
+  FastQ Screen config     : /home/user/demultiplex-qc-pipeline/tests/data/fastq_screen.conf
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/2c55722b3bedd71b965d5a522c241e66/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+
+[1mTest edge cases and mixed format handling[0m
+
+  [1mTest[0m [75894ff7] 'Mixed v1/v2 formats - Auto-detection' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [grave_shockley] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/mixed_samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.011s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [grave_shockley] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/mixed_samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/75894ff7d8202c5b879bb1cc15905a57/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [92585b2c] 'Multiple lanes - Multi-lane processing' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [voluminous_mestorf] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.923s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [voluminous_mestorf] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/92585b2c5912c8596b9fe6873c73fc1/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [8a197421] 'Project organization - v1 format with projects' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [focused_boyd] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/meta/nextflow.log' file for more details
+    [31mFAILED[0m (6.968s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [focused_boyd] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v1/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8a197421f80c781f0c9745b9df874314/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [7b0c2f3e] 'Minimal samplesheet - Minimal metadata' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [exotic_cuvier] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.948s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [exotic_cuvier] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/7b0c2f3e8a1a568555e53b55ddd0b725/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+  [1mTest[0m [5cf487a8] 'Mixed formats - stub' 
+    > Nextflow 25.10.4 is available - Please consider updating your version to it
+    > N E X T F L O W  ~  version 25.04.7
+    > Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [fervent_shockley] DSL2 - revision: 28f1bdbeb2
+    > 
+    > ========================================
+    > nf-core/bclconvert v1.0.0
+    > ========================================
+    > Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/mixed_samplesheet.csv
+    > Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/output
+    > FastQ Screen config     : Not provided (skipping)
+    > Max CPUs                : 2
+    > Max memory              : 6.GB
+    > Max time                : 6.h
+    > Publish mode            : copy
+    > ========================================
+    > 
+    > ERROR ~ Argument of `file` function cannot be null
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/meta/nextflow.log' file for more details
+    > ERROR ~ Failed to invoke `workflow.onError` event handler
+    > 
+    >  -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/meta/nextflow.log' file for more details
+    [31mFAILED[0m (7.082s)
+
+  [31mAssertion failed: 
+  
+  assert workflow.success
+         |        |
+         workflow false
+  [0m
+  [31mNextflow stdout:
+  
+  N E X T F L O W  ~  version 25.04.7
+  Launching `/home/user/demultiplex-qc-pipeline/tests/../main.nf` [fervent_shockley] DSL2 - revision: 28f1bdbeb2
+  
+  ========================================
+  nf-core/bclconvert v1.0.0
+  ========================================
+  Input CSV               : /home/user/demultiplex-qc-pipeline/tests/data/v2/mixed_samplesheet.csv
+  Output directory        : /home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/output
+  FastQ Screen config     : Not provided (skipping)
+  Max CPUs                : 2
+  Max memory              : 6.GB
+  Max time                : 6.h
+  Publish mode            : copy
+  ========================================
+  
+  ERROR ~ Argument of `file` function cannot be null
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/meta/nextflow.log' file for more details
+  ERROR ~ Failed to invoke `workflow.onError` event handler
+  
+   -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/5cf487a8a2916fe801b607f00688ed6e/meta/nextflow.log' file for more details
+  Nextflow stderr:
+  
+  Nextflow 25.10.4 is available - Please consider updating your version to it
+  [0m
+
+
+
+[1m[31mFAILURE: [0m[0mExecuted 23 tests in 166.224s (23 failed)
+

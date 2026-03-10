@@ -1,0 +1,6 @@
+ERROR ~ Argument of `file` function cannot be null
+
+ -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 215 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
+ERROR ~ Failed to invoke `workflow.onError` event handler
+
+ -- Check script '/home/user/demultiplex-qc-pipeline/main.nf' at line: 266 or see '/home/user/demultiplex-qc-pipeline/.nf-test/tests/8c74bc8b595bb0e6920811de00ef51e5/meta/nextflow.log' file for more details
