@@ -22,18 +22,18 @@ The pipeline handles:
 
 ## Features
 
-- ✅ **Dual Demultiplexer Support**: Automatically detects and uses BCL Convert or bcl2fastq2 based on samplesheet format
-- ✅ **Automatic Format Detection**: Seamlessly handles v1 (bcl2fastq2) and v2 (BCL Convert) samplesheet formats
-- ✅ **Batch Processing**: Process multiple BCL runs simultaneously from a single CSV input
-- ✅ **Direct Samplesheet Support**: Use your existing samplesheets without reformatting
-- ✅ **Custom MultiQC Titles**: Set descriptive report titles for each run
-- ✅ **FastQC**: Quality control assessment of sequencing reads
-- ✅ **fastq_screen**: Optional contamination screening against 12 reference genomes
-- ✅ **MultiQC**: Separate QC reports for each run with custom titles
-- ✅ **Container-based**: Reproducible execution with Docker/Singularity via Wave containers
-- ✅ **nf-core Compatible**: Follows nf-core best practices and Nextflow strict syntax
-- ✅ **Scalable**: Automatic parallelization and resource management
-- ✅ **Resume**: Continue from failed tasks with `-resume`
+- **Dual Demultiplexer Support**: Automatically detects and uses BCL Convert or bcl2fastq2 based on samplesheet format
+- **Automatic Format Detection**: Seamlessly handles v1 (bcl2fastq2) and v2 (BCL Convert) samplesheet formats
+- **Batch Processing**: Process multiple BCL runs simultaneously from a single CSV input
+- **Direct Samplesheet Support**: Use your existing samplesheets without reformatting
+- **Custom MultiQC Titles**: Set descriptive report titles for each run
+- **FastQC**: Quality control assessment of sequencing reads
+- **fastq_screen**: Optional contamination screening against 12 reference genomes
+- **MultiQC**: Separate QC reports for each run with custom titles
+- **Container-based**: Reproducible execution with Docker/Singularity via Wave containers
+- **nf-core Compatible**: Follows nf-core best practices and Nextflow strict syntax
+- **Scalable**: Automatic parallelization and resource management
+- **Resume**: Continue from failed tasks with `-resume`
 
 ## Usage
 
@@ -64,8 +64,8 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run main.nf \
-    --input input.csv \
-    -profile docker
+--input input.csv \
+-profile docker
 ```
 
 For more details and further functionality, please refer to the sections below.
@@ -79,18 +79,18 @@ The pipeline intelligently detects the samplesheet format and chooses the approp
 **Detection Priority (Highest to Lowest):**
 
 1. **Priority 1: BCLConvert-Specific Headers** (Primary Marker)
-   - **v2 indicator**: Presence of `[BCLConvert_Settings]` OR `[BCLConvert_Data]` section
-   - These sections are ONLY present in BCL Convert samplesheets
-   - Most reliable indicator of v2 format
+- **v2 indicator**: Presence of `[BCLConvert_Settings]` OR `[BCLConvert_Data]` section
+- These sections are ONLY present in BCL Convert samplesheets
+- Most reliable indicator of v2 format
 
 2. **Priority 2: Standard Section Names** (bcl2fastq markers)
-   - **v1 indicator**: Presence of `[Data]` section (not `[BCLConvert_Data]`)
-   - **v1 indicator**: Presence of `[Settings]` section (not `[BCLConvert_Settings]`)
-   - bcl2fastq uses `[Data]` and `[Settings]`, BCL Convert uses `[BCLConvert_Data]` and `[BCLConvert_Settings]`
+- **v1 indicator**: Presence of `[Data]` section (not `[BCLConvert_Data]`)
+- **v1 indicator**: Presence of `[Settings]` section (not `[BCLConvert_Settings]`)
+- bcl2fastq uses `[Data]` and `[Settings]`, BCL Convert uses `[BCLConvert_Data]` and `[BCLConvert_Settings]`
 
 3. **Priority 3: Version Markers**
-   - **v1 indicator**: `IEMFileVersion,` (any version number) in `[Header]` section
-   - **v2 indicator**: `FileFormatVersion,2` in `[Header]` section
+- **v1 indicator**: `IEMFileVersion,` (any version number) in `[Header]` section
+- **v2 indicator**: `FileFormatVersion,2` in `[Header]` section
 
 4. **Default Behavior**: If no markers are found, defaults to **v2** (bclconvert) as the newer standard
 
@@ -123,10 +123,10 @@ Control BCL Convert output organization:
 ```bash
 # Organize output by sample/project with combined lanes
 nextflow run main.nf \
-  --input runs.csv \
-  --outdir results \
-  --bcl_sampleproject_subdirectories \
-  --no_lane_splitting
+--input runs.csv \
+--outdir results \
+--bcl_sampleproject_subdirectories \
+--no_lane_splitting
 ```
 
 ### With Contamination Screening
@@ -135,9 +135,9 @@ First, set up fastq_screen databases (see the "FastQ Screen Setup" section below
 
 ```bash
 nextflow run main.nf \
-  --input runs.csv \
-  --outdir results \
-  --fastq_screen_config /path/to/fastq_screen.conf
+--input runs.csv \
+--outdir results \
+--fastq_screen_config /path/to/fastq_screen.conf
 ```
 
 ### On HPC Cluster with SLURM
@@ -147,19 +147,19 @@ Create a custom configuration file to specify cluster-specific settings:
 **Example custom.config:**
 ```groovy
 executor {
-    name = "slurm"
-    queueSize = 2000
+name = "slurm"
+queueSize = 2000
 }
 
 process {
-    // Modify these SLURM options to match your cluster
-    clusterOptions = '--partition <partition> --account <account> --qos <qos>'
-    maxRetries = 10
+// Modify these SLURM options to match your cluster
+clusterOptions = '--partition <partition> --account <account> --qos <qos>'
+maxRetries = 10
 }
 
 singularity {
-    // Set your cluster's cache directory
-    cacheDir = '/path/to/singularity/cache'
+// Set your cluster's cache directory
+cacheDir = '/path/to/singularity/cache'
 }
 ```
 
@@ -167,9 +167,9 @@ Then run with:
 
 ```bash
 nextflow run main.nf \
-  -c custom.config \
-  --input runs.csv \
-  --outdir results
+-c custom.config \
+--input runs.csv \
+--outdir results
 ```
 
 Modify the configuration to match your cluster's requirements (partition names, account, paths, etc.).
@@ -230,10 +230,10 @@ cd ..
 
 # Create configuration file
 cat > fastq_screen.conf << 'EOF'
-DATABASE    phix       /path/to/fastq_screen_databases/phix/phix
-DATABASE    adapters   /path/to/fastq_screen_databases/adapters/adapters
-DATABASE    ecoli      /path/to/fastq_screen_databases/ecoli/ecoli
-DATABASE    univec     /path/to/fastq_screen_databases/univec/univec
+DATABASE phix /path/to/fastq_screen_databases/phix/phix
+DATABASE adapters /path/to/fastq_screen_databases/adapters/adapters
+DATABASE ecoli /path/to/fastq_screen_databases/ecoli/ecoli
+DATABASE univec /path/to/fastq_screen_databases/univec/univec
 EOF
 ```
 
@@ -288,17 +288,17 @@ After building all desired databases:
 ```bash
 cat > fastq_screen.conf << 'EOF'
 # FastQ Screen Configuration File
-DATABASE    hg38           /path/to/fastq_screen_databases/hg38/hg38
-DATABASE    mm10           /path/to/fastq_screen_databases/mm10/mm10
-DATABASE    rat            /path/to/fastq_screen_databases/rat/rn6
-DATABASE    univec         /path/to/fastq_screen_databases/univec/univec
-DATABASE    phix           /path/to/fastq_screen_databases/phix/phix
-DATABASE    adapters       /path/to/fastq_screen_databases/adapters/adapters
-DATABASE    ecoli          /path/to/fastq_screen_databases/ecoli/ecoli
-DATABASE    yeast          /path/to/fastq_screen_databases/yeast/yeast
-DATABASE    drosophila     /path/to/fastq_screen_databases/drosophila/drosophila
-DATABASE    mycoplasma     /path/to/fastq_screen_databases/mycoplasma/mycoplasma
-DATABASE    viral          /path/to/fastq_screen_databases/viral/viral
+DATABASE hg38 /path/to/fastq_screen_databases/hg38/hg38
+DATABASE mm10 /path/to/fastq_screen_databases/mm10/mm10
+DATABASE rat /path/to/fastq_screen_databases/rat/rn6
+DATABASE univec /path/to/fastq_screen_databases/univec/univec
+DATABASE phix /path/to/fastq_screen_databases/phix/phix
+DATABASE adapters /path/to/fastq_screen_databases/adapters/adapters
+DATABASE ecoli /path/to/fastq_screen_databases/ecoli/ecoli
+DATABASE yeast /path/to/fastq_screen_databases/yeast/yeast
+DATABASE drosophila /path/to/fastq_screen_databases/drosophila/drosophila
+DATABASE mycoplasma /path/to/fastq_screen_databases/mycoplasma/mycoplasma
+DATABASE viral /path/to/fastq_screen_databases/viral/viral
 EOF
 ```
 
@@ -319,15 +319,15 @@ Pass the config file to the pipeline:
 
 ```bash
 nextflow run main.nf \
-    --input runs.csv \
-    --fastq_screen_config /path/to/fastq_screen_databases/fastq_screen.conf
+--input runs.csv \
+--fastq_screen_config /path/to/fastq_screen_databases/fastq_screen.conf
 ```
 
 Or set it in `nextflow.config`:
 
 ```groovy
 params {
-    fastq_screen_config = '/path/to/fastq_screen_databases/fastq_screen.conf'
+fastq_screen_config = '/path/to/fastq_screen_databases/fastq_screen.conf'
 }
 ```
 
@@ -366,18 +366,18 @@ With the example CSV above, the pipeline will create:
 
 ```
 results/
-├── run1/
-│   ├── bclconvert/
-│   │   ├── output/*.fastq.gz
-│   │   ├── Reports/
-│   │   └── Logs/
-│   ├── fastqc/
-│   └── multiqc/
-│       └── run1_multiqc_report.html  (title: "Cancer Panel - Batch 1")
-├── run2/
-│   └── ... (title: "Cancer Panel - Batch 2")
-└── run3/
-    └── ... (title: "RNA-Seq Control Samples")
+run1/
+bclconvert/
+output/*.fastq.gz
+Reports/
+Logs/
+fastqc/
+multiqc/
+run1_multiqc_report.html (title: "Cancer Panel - Batch 1")
+run2/
+... (title: "Cancer Panel - Batch 2")
+run3/
+... (title: "RNA-Seq Control Samples")
 ```
 
 **Tips:**
@@ -448,16 +448,16 @@ The pipeline generates the following output structure:
 
 ```
 results/
-├── <run_id>/
-│   ├── demux/              # Demultiplexed FASTQ files
-│   │   └── <sample>.fastq.gz
-│   ├── fastqc/             # FastQC reports
-│   │   └── <sample>_fastqc.html
-│   ├── fastq_screen/       # Contamination screening (optional)
-│   │   └── <sample>_screen.txt
-│   └── multiqc/            # Aggregated QC report
-│       └── <multiqc_title>_multiqc.html
-└── pipeline_info/          # Pipeline execution metadata
+<run_id>/
+demux/ # Demultiplexed FASTQ files
+<sample>.fastq.gz
+fastqc/ # FastQC reports
+<sample>_fastqc.html
+fastq_screen/ # Contamination screening (optional)
+<sample>_screen.txt
+multiqc/ # Aggregated QC report
+<multiqc_title>_multiqc.html
+pipeline_info/ # Pipeline execution metadata
 ```
 
 ### Key Output Files
@@ -486,12 +486,12 @@ For more details about interpreting the output files and quality metrics, refer 
 
 #### BCL Convert Specific Parameters
 - `--bcl_sampleproject_subdirectories`: Create subdirectories organized by sample/project in BCL Convert output (default: `false`)
-  - When enabled: organizes output as `output/Sample_Project/Sample_ID/`
-  - When disabled: all files in flat `output/` directory
+- When enabled: organizes output as `output/Sample_Project/Sample_ID/`
+- When disabled: all files in flat `output/` directory
 - `--no_lane_splitting`: Combine lanes in BCL Convert output files (default: `false`)
-  - When enabled: generates `Sample_S1_R1_001.fastq.gz` (lanes combined)
-  - When disabled: generates `Sample_S1_L001_R1_001.fastq.gz`, `Sample_S1_L002_R1_001.fastq.gz`, etc.
-  - Note: Only applies to BCL Convert, not bcl2fastq
+- When enabled: generates `Sample_S1_R1_001.fastq.gz` (lanes combined)
+- When disabled: generates `Sample_S1_L001_R1_001.fastq.gz`, `Sample_S1_L002_R1_001.fastq.gz`, etc.
+- Note: Only applies to BCL Convert, not bcl2fastq
 
 ### Resource Limits
 - `--max_cpus`: Maximum CPUs (default: `32`)
@@ -552,12 +552,12 @@ nextflow run . -profile test_full,docker
 
 The pipeline includes **23 automated test cases** covering:
 
-- ✅ Both demultiplexers (BCLConvert v2 & bcl2fastq2 v1)
-- ✅ All QC modules (FastQC, MultiQC, FASTQ Screen)
-- ✅ Samplesheet format auto-detection
-- ✅ Custom parameter combinations
-- ✅ Edge cases and mixed formats
-- ✅ Stub mode for fast validation
+- Both demultiplexers (BCLConvert v2 & bcl2fastq2 v1)
+- All QC modules (FastQC, MultiQC, FASTQ Screen)
+- Samplesheet format auto-detection
+- Custom parameter combinations
+- Edge cases and mixed formats
+- Stub mode for fast validation
 
 ### Running Tests
 
@@ -599,13 +599,13 @@ nf-test test --updateSnapshot
 
 | Component | Test Cases | Coverage |
 |-----------|------------|----------|
-| BCLConvert v2 | 9 tests | ✅ Complete |
-| bcl2fastq2 v1 | 9 tests | ✅ Complete |
-| FastQC | 4 tests | ✅ Complete |
-| MultiQC | 6 tests | ✅ Complete |
-| FASTQ Screen | 4 tests | ✅ Complete |
-| Format detection | 6 tests | ✅ Complete |
-| Stub mode | 5 tests | ✅ Complete |
+| BCLConvert v2 | 9 tests | Complete |
+| bcl2fastq2 v1 | 9 tests | Complete |
+| FastQC | 4 tests | Complete |
+| MultiQC | 6 tests | Complete |
+| FASTQ Screen | 4 tests | Complete |
+| Format detection | 6 tests | Complete |
+| Stub mode | 5 tests | Complete |
 
 ### Continuous Integration
 
@@ -626,16 +626,16 @@ This pipeline follows nf-core best practices and is fully compatible with Nextfl
 
 **Key Compliance Features:**
 
-- ✅ **Strict Syntax Mode**: All code validated with `NXF_SYNTAX_PARSER=v2`
-- ✅ **Module Structure**: Proper input/output handling with tuple structures
-- ✅ **Version Tracking**: All modules emit versions.yml for reproducibility
-- ✅ **Stub Sections**: All modules include stub implementations for testing
-- ✅ **Channel Handling**: Explicit channel declarations with lowercase `channel` namespace
-- ✅ **Configuration**: Clean separation of config files with Utils library for shared functions
-- ✅ **Container Integration**: Wave containers for all tools with automatic caching
-- ✅ **Error Handling**: Proper validation and informative error messages
-- ✅ **Resource Management**: Flexible resource allocation with configurable max limits
-- ✅ **Automated Testing**: Comprehensive nf-test suite with 23 test cases
+- **Strict Syntax Mode**: All code validated with `NXF_SYNTAX_PARSER=v2`
+- **Module Structure**: Proper input/output handling with tuple structures
+- **Version Tracking**: All modules emit versions.yml for reproducibility
+- **Stub Sections**: All modules include stub implementations for testing
+- **Channel Handling**: Explicit channel declarations with lowercase `channel` namespace
+- **Configuration**: Clean separation of config files with Utils library for shared functions
+- **Container Integration**: Wave containers for all tools with automatic caching
+- **Error Handling**: Proper validation and informative error messages
+- **Resource Management**: Flexible resource allocation with configurable max limits
+- **Automated Testing**: Comprehensive nf-test suite with 23 test cases
 
 **Testing with Strict Syntax:**
 
