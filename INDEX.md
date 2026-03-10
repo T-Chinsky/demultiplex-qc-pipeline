@@ -15,11 +15,6 @@
 
 ### **Testing**
 - **[tests/README.md](tests/README.md)** - Testing guide and infrastructure
-- **[tests/TEST_INFRASTRUCTURE_SUMMARY.md](tests/TEST_INFRASTRUCTURE_SUMMARY.md)** - Test implementation details
-
-### **Project Information**
-- **[SESSION_SUMMARY.md](SESSION_SUMMARY.md)** - What was built in this session
-- **[PIPELINE_CONVERSION_COMPLETE.md](PIPELINE_CONVERSION_COMPLETE.md)** - Conversion details and validation status
 
 ---
 
@@ -31,8 +26,6 @@
 | **README.md** | Complete documentation and reference | All users |
 | **TROUBLESHOOTING.md** | Error solutions and debugging | Users having issues |
 | **ARCHITECTURE.md** | Technical design and data flow | Developers |
-| **SESSION_SUMMARY.md** | Project accomplishments | Project managers |
-| **PIPELINE_CONVERSION_COMPLETE.md** | Validation and next steps | Technical leads |
 | **tests/README.md** | Testing procedures | Developers/QA |
 
 ---
@@ -50,7 +43,6 @@
 | **Understand workflow** | [ARCHITECTURE.md § Data Flow](ARCHITECTURE.md#-detailed-data-flow) |
 | **Add a new module** | [ARCHITECTURE.md § Extension Points](ARCHITECTURE.md#-extension-points) |
 | **Check outputs** | [docs/output.md](docs/output.md) |
-| **See what was built** | [SESSION_SUMMARY.md](SESSION_SUMMARY.md) |
 
 ---
 
@@ -64,9 +56,7 @@ demultiplex-qc-pipeline/
 │   ├── QUICK_START.md
 │   ├── README.md
 │   ├── TROUBLESHOOTING.md
-│   ├── ARCHITECTURE.md
-│   ├── SESSION_SUMMARY.md
-│   └── PIPELINE_CONVERSION_COMPLETE.md
+│   └── ARCHITECTURE.md
 │
 ├── 🔬 Pipeline Code
 │   ├── main.nf
@@ -84,7 +74,6 @@ demultiplex-qc-pipeline/
 └── 🧪 Testing
     └── tests/
         ├── README.md
-        ├── TEST_INFRASTRUCTURE_SUMMARY.md
         ├── *.nf.test
         └── data/
 ```
@@ -119,7 +108,6 @@ demultiplex-qc-pipeline/
 1. Study [ARCHITECTURE.md](ARCHITECTURE.md) module structure
 2. Review [tests/README.md](tests/README.md) for test patterns
 3. Explore extending pipeline (adding modules, modifying workflows)
-4. Read [SESSION_SUMMARY.md](SESSION_SUMMARY.md) for design decisions
 
 ---
 
