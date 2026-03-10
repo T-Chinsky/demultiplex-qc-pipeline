@@ -27,7 +27,7 @@ nextflow run main.nf \
 ```
 
 **That's it!** The pipeline will:
-1. Detect samplesheet format (BCLConvert v2/v3 or bcl2fastq)
+1. Detect samplesheet format (BCL Convert v2 or bcl2fastq v1)
 2. Run demultiplexing with appropriate tool
 3. Perform FastQC on outputs
 4. Generate MultiQC report
@@ -114,25 +114,29 @@ This runs a quick validation with minimal test data.
 
 ## 🔍 Understanding Samplesheet Formats
 
-### BCLConvert v2 Format
+### BCL Convert v2 Format (Simple)
 ```csv
 Lane,Sample_ID,index,index2
 1,Sample1,ACGTACGT,TGCATGCA
 2,Sample2,GGTTAACC,CCTTAATT
 ```
 
-### BCLConvert v3 Format (with [Header])
+### BCL Convert v2 Format (With Header Sections)
 ```csv
 [Header]
 FileFormatVersion,2
+
 [BCLConvert_Settings]
-SoftwareVersion,3.9.3
+SoftwareVersion,4.2.7
+
 [BCLConvert_Data]
 Lane,Sample_ID,Index,Index2
 1,Sample1,ACGTACGT,TGCATGCA
 ```
 
-### bcl2fastq Format
+**Note:** Both simple and full header formats are BCL Convert v2. The `SoftwareVersion` indicates BCL Convert tool version, not samplesheet format version.
+
+### bcl2fastq v1 Format
 ```csv
 FCID,Lane,Sample_ID,SampleRef,Index,Description,Control,Recipe,Operator,SampleProject
 FC1,1,Sample1,hg38,ACGTACGT,,,,,Project1

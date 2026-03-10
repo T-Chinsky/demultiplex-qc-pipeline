@@ -96,13 +96,13 @@ ERROR: Could not determine samplesheet version from header
 
 1. **Check samplesheet header format**:
 
-   BCLConvert v2:
+   BCL Convert v2 (simple):
    ```csv
    Lane,Sample_ID,index,index2
    1,Sample1,ACGTACGT,TGCATGCA
    ```
 
-   BCLConvert v3:
+   BCL Convert v2 (with header):
    ```csv
    [Header]
    FileFormatVersion,2
@@ -110,7 +110,7 @@ ERROR: Could not determine samplesheet version from header
    Lane,Sample_ID,Index,Index2
    ```
 
-   bcl2fastq:
+   bcl2fastq v1:
    ```csv
    FCID,Lane,Sample_ID,SampleRef,Index,Description
    ```

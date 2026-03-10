@@ -105,7 +105,7 @@ run_ch
 │   1. Read first 10 lines             │
 │   2. Check for [Header] section      │
 │   3. Identify column names           │
-│   4. Determine version (v1/v2/v3)    │
+│   4. Determine version (v1/v2)       │
 │                                      │
 │ Output:                              │
 │   tuple val(meta),                   │
@@ -513,9 +513,8 @@ input_ch = channel.fromPath(csv)
 ```groovy
 // Branch by condition
 ch.branch { meta, files ->
-    v1: meta.version == 'v1'
-    v2: meta.version == 'v2'
-    v3: meta.version == 'v3'
+    v1: meta.version == 'v1'  // bcl2fastq format
+    v2: meta.version == 'v2'  // BCL Convert format
 }
 
 // Join channels by key
