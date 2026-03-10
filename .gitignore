@@ -3,6 +3,13 @@ work/
 .nextflow*
 results/
 .DS_Store
+*.log
+
+# nf-test
+.nf-test/
+.nf-test.log
+nf-test-output.log
+*.nf.test.snap
 
 # Python
 __pycache__/

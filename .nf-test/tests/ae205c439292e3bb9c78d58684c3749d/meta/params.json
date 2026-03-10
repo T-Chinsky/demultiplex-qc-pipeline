@@ -1,1 +1,0 @@
-{"skip_fastq_screen":true,"input":"/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/output/input.csv","max_time":"6.h","max_cpus":2,"max_memory":"6.GB","outdir":"/home/user/demultiplex-qc-pipeline/.nf-test/tests/ae205c439292e3bb9c78d58684c3749d/output"}
