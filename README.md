@@ -178,29 +178,27 @@ Modify the configuration to match your cluster's requirements (partition names, 
 
 For contamination screening, you'll need to download and build reference genome databases using Bowtie2.
 
-### Prerequisites
+> 📘 **Comprehensive Guide:** See [**FastQ Screen Database Setup Guide**](docs/fastq_screen_database_setup.md) for complete instructions including:
+> - Quick Start (4 databases, ~30 minutes)
+> - Full Setup (11 databases, ~5-6 hours)  
+> - Individual database build instructions
+> - Troubleshooting and maintenance
 
-- **Bowtie2** installed and in your PATH
-- **wget** or **curl** for downloading
-- At least **50 GB** of free disk space (for all genomes)
-- Approximately **4-6 hours** for downloading and indexing all databases
+### Quick Setup
 
-### Quick Start: Minimal Setup (~30 minutes)
-
-For testing or essential contamination screening, download these 4 databases:
+The minimal setup for testing requires 4 core databases (~30 minutes):
 
 ```bash
-# Create database directory
 mkdir -p /path/to/fastq_screen_databases
 cd /path/to/fastq_screen_databases
 
-# 1. PhiX Control (sequencing control, ~5 KB)
+# 1. PhiX Control
 mkdir -p phix && cd phix
 wget -O phix.fa "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=NC_001422.1&rettype=fasta"
 bowtie2-build phix.fa phix
 cd ..
 
-# 2. Adapters (Illumina adapters, ~1 KB)
+# 2. Adapters
 mkdir -p adapters && cd adapters
 cat > adapters.fa << 'EOF'
 >TruSeq_Universal_Adapter
@@ -215,14 +213,14 @@ EOF
 bowtie2-build adapters.fa adapters
 cd ..
 
-# 3. E. coli (bacterial contamination, ~4.6 MB)
+# 3. E. coli
 mkdir -p ecoli && cd ecoli
 wget -O ecoli.fa.gz "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz"
 gunzip ecoli.fa.gz
 bowtie2-build ecoli.fa ecoli
 cd ..
 
-# 4. UniVec (vector contamination, ~10 MB)
+# 4. UniVec
 mkdir -p univec && cd univec
 wget -O univec.fa https://ftp.ncbi.nlm.nih.gov/pub/UniVec/UniVec
 bowtie2-build univec.fa univec
@@ -237,99 +235,25 @@ DATABASE univec /path/to/fastq_screen_databases/univec/univec
 EOF
 ```
 
-**Replace `/path/to/fastq_screen_databases` with your actual path in the config file.**
-
-### Full Setup: All 12 Reference Genomes
-
-For comprehensive contamination screening, download all reference databases:
-
-| Database | Genome Size | Index Size | Build Time (8 cores) | Key Contaminants |
-|----------|-------------|------------|----------------------|------------------|
-| **hg38** | 3.1 GB | ~8 GB | ~2 hours | Human contamination |
-| **mm10** | 2.7 GB | ~7 GB | ~1.5 hours | Mouse contamination |
-| **rat** | 2.8 GB | ~7 GB | ~1.5 hours | Rat contamination |
-| **drosophila** | 143 MB | ~600 MB | ~10 minutes | Fly contamination |
-| **yeast** | 12 MB | ~50 MB | ~1 minute | Yeast contamination |
-| **ecoli** | 4.6 MB | ~20 MB | ~1 minute | Bacterial contamination |
-| **mycoplasma** | 580 KB | ~3 MB | <1 minute | Mycoplasma contamination |
-| **viral** | 500 MB | ~2 GB | ~5 minutes | Viral contamination |
-| **univec** | 10 MB | ~30 MB | ~1 minute | Vector contamination |
-| **phix** | 5 KB | ~20 KB | <1 minute | Sequencing control |
-| **adapters** | 1 KB | ~5 KB | <1 minute | Adapter dimers |
-| **bacterial** | ~50 GB | ~150 GB | Several hours | Broad bacterial screen (optional) |
-| **Total** | **~9 GB** | **~25 GB** | **~5-6 hours** | (excluding full bacterial) |
-
-#### Example: Human Genome (hg38)
-
-```bash
-mkdir -p hg38 && cd hg38
-wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
-gunzip hg38.fa.gz
-bowtie2-build --threads 8 hg38.fa hg38
-cd ..
-```
-
-#### Example: Viral Database
-
-```bash
-mkdir -p viral && cd viral
-wget https://ftp.ncbi.nlm.nih.gov/refseq/release/viral/viral.1.1.genomic.fna.gz
-wget https://ftp.ncbi.nlm.nih.gov/refseq/release/viral/viral.2.1.genomic.fna.gz
-gunzip -c viral.*.genomic.fna.gz > viral_all.fa
-bowtie2-build --threads 8 viral_all.fa viral
-rm viral.*.genomic.fna.gz
-cd ..
-```
-
-### Create Full Configuration File
-
-After building all desired databases:
-
-```bash
-cat > fastq_screen.conf << 'EOF'
-# FastQ Screen Configuration File
-DATABASE hg38 /path/to/fastq_screen_databases/hg38/hg38
-DATABASE mm10 /path/to/fastq_screen_databases/mm10/mm10
-DATABASE rat /path/to/fastq_screen_databases/rat/rn6
-DATABASE univec /path/to/fastq_screen_databases/univec/univec
-DATABASE phix /path/to/fastq_screen_databases/phix/phix
-DATABASE adapters /path/to/fastq_screen_databases/adapters/adapters
-DATABASE ecoli /path/to/fastq_screen_databases/ecoli/ecoli
-DATABASE yeast /path/to/fastq_screen_databases/yeast/yeast
-DATABASE drosophila /path/to/fastq_screen_databases/drosophila/drosophila
-DATABASE mycoplasma /path/to/fastq_screen_databases/mycoplasma/mycoplasma
-DATABASE viral /path/to/fastq_screen_databases/viral/viral
-EOF
-```
-
-**Important:** Update all `/path/to/fastq_screen_databases` references with your actual installation path.
-
-### Testing Your Setup
-
-Verify fastq_screen can find all databases:
-
-```bash
-fastq_screen --version
-fastq_screen --conf /path/to/fastq_screen_databases/fastq_screen.conf --test
-```
+**Replace `/path/to/fastq_screen_databases` with your actual path.**
 
 ### Use With Pipeline
 
-Pass the config file to the pipeline:
-
 ```bash
 nextflow run main.nf \
---input runs.csv \
---fastq_screen_config /path/to/fastq_screen_databases/fastq_screen.conf
+  --input runs.csv \
+  --fastq_screen_config /path/to/fastq_screen_databases/fastq_screen.conf
 ```
 
-Or set it in `nextflow.config`:
+Or set in `nextflow.config`:
 
 ```groovy
 params {
-fastq_screen_config = '/path/to/fastq_screen_databases/fastq_screen.conf'
+  fastq_screen_config = '/path/to/fastq_screen_databases/fastq_screen.conf'
 }
 ```
+
+For comprehensive screening including human, mouse, rat, drosophila, yeast, mycoplasma, and viral databases, see the [**full setup guide**](docs/fastq_screen_database_setup.md).
 
 ## Input Files
 
